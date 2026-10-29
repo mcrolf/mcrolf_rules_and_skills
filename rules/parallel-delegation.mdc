@@ -1,0 +1,19 @@
+---
+description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks.
+alwaysApply: true
+---
+
+# Parallel Delegation
+
+Proactively delegate independent subtasks to available subagents when meaningful work can run in parallel without interfering with any task already in progress. Do not wait for the user to request delegation when these conditions are met.
+
+- Before delegating, check known active tasks, agent assignments, pending dependencies, and shared resources for conflicts. Use the runtime's task inventory when available and relevant.
+- Delegate only work within the user's authorized scope that can proceed independently. Keep work sequential when it depends on an unfinished result or coordination would outweigh the benefit.
+- Give each subagent a clear objective, necessary context, explicit ownership of files or resources, constraints, and a concrete expected result. Tell it about relevant work already in progress.
+- Assign separate files or components for concurrent edits. Shared files, branches, browser sessions, services, databases, and external actions require coordinated ownership or isolation supported by the runtime. If safe separation is uncertain, do the work sequentially.
+- Continue useful independent work while subagents run. Avoid duplicating assigned work, overwriting another agent's changes, or disrupting an active task to make room for a new one.
+- Keep the number of subagents proportionate to the work and within runtime limits. Follow the active provider's delegation, permissions, completion, and cancellation workflows.
+- Review and integrate delegated results, resolve conflicts, and perform appropriate validation before reporting the overall task complete. The primary agent remains responsible for the final result.
+- If priorities or shared resources change, coordinate, narrow, or stop affected delegated work before continuing. Never cancel an unrelated task without authorization.
+
+For example, delegate documentation research while implementing an independent component, or assign separate components to different agents. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.

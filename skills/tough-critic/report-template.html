@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tough Critic Report: {{PROJECT_NAME}}</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #fbfaf7;
+      --card: #ffffff;
+      --critical: #8b1e1e;
+      --high: #9a4a00;
+      --medium: #6b5a00;
+      --low: #3d4a5c;
+      --accent: #0f3d3e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    header {
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    header .eyebrow {
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+      font-weight: 700;
+    }
+
+    .meta {
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin: 2.25rem 0 0.75rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.35rem;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 0 0 0.5rem;
+    }
+
+    p { margin: 0.5rem 0 0.75rem; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0 1.5rem;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 0.85rem 1rem;
+    }
+
+    .stat .n {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat .l {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .stat.critical .n { color: var(--critical); }
+    .stat.high .n { color: var(--high); }
+    .stat.medium .n { color: var(--medium); }
+    .stat.low .n { color: var(--low); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      background: var(--card);
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef2f1;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    code, .path {
+      font-family: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.84em;
+    }
+
+    .finding {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.1rem;
+      margin: 1rem 0;
+      break-inside: avoid;
+    }
+
+    .finding.critical { border-left-color: var(--critical); }
+    .finding.high { border-left-color: var(--high); }
+    .finding.medium { border-left-color: var(--medium); }
+    .finding.low { border-left-color: var(--low); }
+
+    .finding .badges {
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      padding: 0.1rem 0.45rem;
+      background: #f3f3f0;
+    }
+
+    .badge.severity {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    ul { margin: 0.35rem 0 0.5rem 1.2rem; padding: 0; }
+    li { margin: 0.25rem 0; }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media print {
+      body { background: white; font-size: 11pt; }
+      main { max-width: none; padding: 0; }
+      .finding, .stat { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Tough Critic Report</p>
+      <h1>{{PROJECT_NAME}}: craftsmanship and domain-language critique</h1>
+      <div class="meta">
+        <div><strong>Date:</strong> {{DATE}}</div>
+        <div><strong>Scope:</strong> {{SCOPE}}</div>
+        <div><strong>Revision:</strong> {{BRANCH_OR_COMMIT}}</div>
+        <div><strong>Rules:</strong> clean-code, domain-language</div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Executive summary</h2>
+      <p>{{EXECUTIVE_SUMMARY}}</p>
+      <div class="summary-grid">
+        <div class="stat critical"><span class="n">{{COUNT_CRITICAL}}</span><span class="l">Critical</span></div>
+        <div class="stat high"><span class="n">{{COUNT_HIGH}}</span><span class="l">High</span></div>
+        <div class="stat medium"><span class="n">{{COUNT_MEDIUM}}</span><span class="l">Medium</span></div>
+        <div class="stat low"><span class="n">{{COUNT_LOW}}</span><span class="l">Low</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Domain language snapshot</h2>
+      <p>{{DOMAIN_LANGUAGE_NARRATIVE}}</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Canonical term</th>
+            <th>Conflicts / synonyms seen</th>
+            <th>Where defined</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Repeat rows; delete placeholders -->
+          <tr>
+            <td>{{TERM}}</td>
+            <td>{{SYNONYMS}}</td>
+            <td class="path">{{DEFINED_AT}}</td>
+            <td>{{TERM_NOTES}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Findings</h2>
+      <p>Sorted by severity, then rough effort. Each item maps to a clean-code or domain-language principle.</p>
+
+      <!-- Duplicate .finding blocks as needed. Set class to critical|high|medium|low -->
+      <article class="finding {{SEVERITY}}">
+        <div class="badges">
+          <span class="badge">{{ID}}</span>
+          <span class="badge severity">{{SEVERITY}}</span>
+          <span class="badge">Effort {{EFFORT}}</span>
+          <span class="badge">{{PRINCIPLE}}</span>
+        </div>
+        <h3>{{TITLE}}</h3>
+        <p><strong>Evidence:</strong> {{EVIDENCE}}</p>
+        <p><strong>Why it matters:</strong> {{WHY}}</p>
+        <p><strong>Proposed solution:</strong> {{SOLUTION}}</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Out of scope / not problems</h2>
+      <ul>
+        <li>{{NOT_A_PROBLEM}}</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Method and limits</h2>
+      <p>{{METHOD_AND_LIMITS}}</p>
+    </section>
+
+    <footer>
+      Generated by the tough-critic skill using ~/.agents/rules/clean-code.mdc and ~/.agents/rules/domain-language.mdc.
+      Print this page to PDF if a separate PDF file was not produced.
+    </footer>
+  </main>
+</body>
+</html>

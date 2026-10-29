@@ -1,0 +1,15 @@
+---
+description: Prohibit em dashes in agent writing and en dashes used in their place, while allowing hyphens in compound words.
+alwaysApply: true
+---
+
+# No Em Dashes
+
+- Do not use em dashes (Unicode U+2014) in anything you write, including chat responses, progress updates, documentation, comments, commit messages, and generated content.
+- Do not substitute an en dash (Unicode U+2013) for an em dash to separate clauses, introduce an aside, or create a sentence break.
+- Use commas, parentheses, colons, semicolons, or separate sentences instead. Rewrite the sentence when needed to keep it natural and clear.
+- Hyphens in compound words are allowed, such as `well-known` and `user-defined`.
+- En dashes may be used for their conventional purpose in ranges, but never as a substitute for an em dash.
+- Before sending or saving writing, check for em dashes and en dashes used as sentence punctuation, and replace them.
+
+Example: Write "The update is ready, pending review." or "The update is ready. Review is pending."

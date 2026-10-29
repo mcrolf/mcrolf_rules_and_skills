@@ -1,0 +1,37 @@
+---
+description: Use tokens efficiently through focused investigation, minimal complete changes, and concise reporting without sacrificing safeguards or verification.
+alwaysApply: true
+---
+
+# Token Efficiency
+
+Reduce unnecessary context, tool output, code, and narration. Complete the user's task fully; token savings never justify incomplete work or weaker correctness.
+
+## Work Efficiently
+
+- Read the request and relevant implementation before editing. Trace affected callers and dependencies far enough to understand the change and its consequences.
+- Search narrowly, read relevant excerpts, and bound tool output. Reuse verified context instead of repeatedly reading unchanged files or dumping whole directories and logs.
+- Batch independent searches and reads when practical. Delegate independent work when useful, with focused briefs and clear ownership; avoid duplicate investigation and delegation overhead for trivial work.
+- Make the smallest clear change that satisfies the whole request. Reuse existing project patterns, helpers, platform capabilities, and installed dependencies before adding new machinery.
+- Avoid speculative features, premature abstractions, unrelated cleanup, unnecessary dependencies, and compressed code that is harder to understand.
+- Keep progress updates brief and useful. Report findings, decisions, and blockers instead of narrating routine tool calls or repeating plans.
+
+## Never Sacrifice These to Save Tokens
+
+- Input validation at trust boundaries, security, and correct encoding or escaping for the destination context.
+- Error handling that prevents data loss, including safeguards already present in code being moved or refactored.
+- Accessibility and anything the user explicitly requested.
+- Necessary investigation, lint checks, and verification for non-trivial logic.
+
+## Verification
+
+- Every non-trivial logic change must leave at least one runnable check behind: the smallest test or self-check that fails if the changed behavior breaks. Reuse or extend an existing check when sufficient, and make its run command discoverable.
+- Check observable behavior, including relevant edge cases and failure paths. Lint alone does not verify logic. For bug fixes, demonstrate that the check catches the original failure when practical.
+- Run relevant checks and required lint. Broaden investigation or repeat checks when failures, new changes, or unresolved uncertainty justify it; avoid redundant runs once the evidence is sufficient.
+- Trivial wording or formatting changes need proportionate inspection, not artificial tests. If a required check cannot run, state why and what remains unverified. Never imply that an unrun check passed.
+
+## Final Responses
+
+Keep final responses clear and concise. State the changed behavior, the verification performed and its result, and any unresolved task or blocker. Include material limitations when needed. Omit repeated context, routine implementation narration, and offers to finish work already requested. Never omit information needed to understand or use the result.
+
+Loosely inspired by [Ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail/SKILL.md), adapted to the user's token-efficiency and verification requirements.

@@ -1,0 +1,65 @@
+---
+description: Enforce Clean Code craftsmanship when writing or changing code: simplicity, clear names, small focused units, honest structure, and readable tests.
+alwaysApply: true
+---
+
+# Clean Code
+
+Write code that another developer can read, change, extend, and maintain without reconstructing the author's intent. Prefer clarity over cleverness. Follow the project's conventions first; apply these craftsmanship practices within them.
+
+Adapted from [Clean Code principles](summary of Robert C. Martin).
+
+## General Craftsmanship
+
+- Keep it simple. Reduce complexity; do not add abstractions, configuration, or indirection without a clear need.
+- Leave touched code a bit cleaner than you found it when that cleanup is local to the change. Do not expand into unrelated refactors.
+- Fix the root cause of bugs and design problems. Do not paper over symptoms with special cases when a clear local fix is available.
+- Be consistent with how similar things are already done in the codebase.
+
+## Names
+
+- Use descriptive, unambiguous, pronounceable, searchable names that make meaningful distinctions.
+- Align names with the project's domain language when a domain term exists.
+- Replace magic numbers and opaque literals with named constants when the meaning is not obvious at the use site.
+- Avoid encodings and type prefixes in names. Prefer names that say what the thing is or does.
+
+## Functions and Methods
+
+- Keep functions small and focused on one thing. Prefer fewer arguments.
+- Avoid flag arguments; split into clear methods instead when practical.
+- Prefer no surprising side effects. If a function mutates state or performs I/O, make that obvious from its name and place in the design.
+- Avoid negative conditionals when a positive form is clearer.
+- Use explanatory variables and encapsulate boundary conditions in one place instead of scattering edge-case logic.
+
+## Structure and Design
+
+- Separate concepts vertically; keep related code dense and close. Declare variables near their use; keep dependent and similar functions near each other.
+- Prefer downward call order: high-level overview first, details below.
+- Keep configurable values at high levels. Prevent over-configurability.
+- Depend on direct collaborators (Law of Demeter). Prefer dependency injection over hidden global lookup when wiring behavior.
+- Prefer polymorphism or clear strategy separation over growing switch/case or if/else chains when the project already uses that style for the problem.
+- Hide internal structure of objects. Prefer small types with a clear responsibility. Avoid hybrid "half object, half data bag" shapes when a clear boundary exists.
+- Prefer dedicated value objects over primitives when a primitive obscures meaning or invites mix-ups (for example IDs, money, quantities).
+
+## Comments
+
+- Prefer expressing intent in names and structure over comments.
+- Do not add redundant or obvious comments, or commented-out code; delete unused code.
+- Use comments for intent, clarification of non-obvious consequences, or warnings that code alone cannot carry safely.
+
+## Tests
+
+- Tests should be readable, fast, independent, and repeatable.
+- Prefer focused assertions that make failures obvious. One primary assert per test is a useful default when it stays clear; group closely related checks when splitting them would obscure the behavior under test.
+
+## Watch for These Smells
+
+Avoid introducing or expanding:
+
+- Rigidity: small changes cascade across many modules.
+- Fragility: one change breaks unrelated parts.
+- Immobility: useful logic cannot be reused without high risk or effort.
+- Needless complexity or needless repetition.
+- Opacity: code that resists understanding.
+
+When a change would worsen these, choose the clearer structure or call out the tradeoff before proceeding.

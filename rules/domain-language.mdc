@@ -1,0 +1,43 @@
+---
+description: Enforce the codebase Ubiquitous Language from Domain-Driven Design; challenge mismatched terms and avoid duplicate concepts under synonyms.
+alwaysApply: true
+---
+
+# Domain Language
+
+Prefer the project's established domain language for data model entities, relationships, user roles, actions, screens, and product concepts. Do not invent near-synonyms when the codebase already names the thing.
+
+This rule follows Domain-Driven Design (DDD) practice, especially Ubiquitous Language: use the same vocabulary in conversation, code, UI, and documentation so business meaning and implementation stay aligned.
+
+## Discover and Prefer Existing Terms
+
+- Before naming, describing, or proposing work, inspect how the codebase already names the concept: types, schema, routes, UI copy, docs, tests, and prior conversation in that repo.
+- Use the project's term even when a common industry synonym feels clearer to you. Example: if the app calls it a "landing page," do not rewrite or re-implement it as a "home page" unless that is also the project's name for a distinct surface.
+- Match role, action, and entity names exactly when discussing or implementing them (for example "moderator" vs "admin", "archive" vs "delete", "workspace" vs "organization").
+- Prefer existing identifiers, labels, and route names over renaming for taste. Propose a rename only when the user asks or the current term is clearly wrong and inconsistent.
+- When domain experts or product language in the repo use specialized vocabulary, reflect those terms in code and writing rather than translating them into generic tech jargon.
+
+## Challenge Incorrect or Ambiguous Language
+
+- When the user, docs, or a proposed change uses a term that conflicts with or loosely maps onto existing domain language, challenge it briefly: state the codebase term, where it appears, and ask which concept is intended before building.
+- If two synonyms might mean the same thing or two different things, stop and resolve the mapping. Do not assume.
+- Call out when a request sounds like a new feature but matches an existing capability under different wording. Reuse or extend the existing concept instead of creating a parallel one.
+- Respect Bounded Contexts: the same word can mean different models in different areas of the system. Do not collapse distinct contextual meanings into one shared type or label without confirming the contexts match.
+
+## Prevent Duplicate Concepts
+
+- Do not add parallel models, endpoints, screens, flags, or docs that restate an existing concept under a different name.
+- When introducing a genuinely new concept, choose one clear term, use it consistently in code, UI, and documentation, and distinguish it explicitly from nearby existing terms.
+- Keep documentation, comments, commit messages, and chat aligned with the same vocabulary as the implementation.
+
+## Communication
+
+- In explanations and examples, reinforce the project's terms rather than translating everything into generic vocabulary.
+- If you must use a synonym for clarity, pair it once with the canonical term (for example, "the landing page (marketing entry route)"), then stick to the canonical term.
+
+## Resources
+
+Use these when clarifying or teaching domain language choices:
+
+- [An Introduction to Domain-Driven Design](https://learn.microsoft.com/en-us/archive/msdn-magazine/2009/february/best-practice-an-introduction-to-domain-driven-design) (David Laribee, MSDN Magazine): Ubiquitous Language, Bounded Contexts, and modeling from business vocabulary.
+- Eric Evans, *Domain-Driven Design: Tackling Complexity in the Heart of Software*: the source patterns this rule draws from, especially Ubiquitous Language and Bounded Context.
