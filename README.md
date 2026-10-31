@@ -1,6 +1,8 @@
 # Rules and skills
 
-Shared agent rules and skills. [`AGENTS.md`](AGENTS.md) is the source of truth. Each provider gets a short entry-point file that points at it. Do not copy the rule text into provider files.
+The purpose of these rules and skills is to give agents the working habits of people who have built and operated serious systems. They bring together knowledge from enterprise architecture veterans, traditional finance experts, manufacturing software experts, and newer programmers who learned from seasoned veterans.
+
+[`AGENTS.md`](AGENTS.md) is the source of truth. Each provider gets a short entry-point file that points at it. Do not copy the rule text into provider files.
 
 This repository contains:
 
@@ -8,7 +10,7 @@ This repository contains:
 | --- | --- |
 | `AGENTS.md` | Discovery, precedence, and where to read rules and skills |
 | `rules/*.mdc` | Always-on rules: parallel delegation, no em dashes, token efficiency, domain language, clean code |
-| `skills/*/SKILL.md` | `knowledge-bank`, `react-best-practices`, `tough-critic` |
+| `skills/*/SKILL.md` | `clean-code`, `knowledge-bank`, `react-best-practices`, `tough-critic` |
 
 Skills and `AGENTS.md` look for `~/.agents/rules` and `~/.agents/skills`. A clone by itself is not enough. Open this repository in a provider you already use, paste the shared prompt, then paste the prompt for each provider you want.
 
@@ -48,7 +50,7 @@ Do not install these skills under ~/.codex/skills. Codex already reads ~/.agents
 
 Do not replace a repository AGENTS.md. That file is for the project, and Codex loads it in addition to ~/.codex/AGENTS.md.
 
-When you finish, tell me how to confirm the skills knowledge-bank, react-best-practices, and tough-critic are available. If a new skill does not appear, tell me to restart Codex.
+When you finish, tell me how to confirm the skills clean-code, knowledge-bank, react-best-practices, and tough-critic are available. If a new skill does not appear, tell me to restart Codex.
 ```
 
 ## Claude
@@ -62,7 +64,7 @@ Write ~/.claude/CLAUDE.md so it imports ~/.agents/AGENTS.md with @~/.agents/AGEN
 
 Link each skill directory from this repo into ~/.claude/skills/, keeping the directory name. Claude names a skill after its directory. If a destination is already a real directory, leave it and tell me. If this Claude instance uses CLAUDE_CONFIG_DIR, use that directory instead of ~/.claude.
 
-When you finish, tell me to start a new session and run /context, and to expect CLAUDE.md under Memory files. Remind me that an explicit skill mention expands one skill per message: /knowledge-bank, /react-best-practices, or /tough-critic.
+When you finish, tell me to start a new session and run /context, and to expect CLAUDE.md under Memory files. Remind me that an explicit skill mention expands one skill per message: /clean-code, /knowledge-bank, /react-best-practices, or /tough-critic.
 ```
 
 ## Cursor
@@ -72,7 +74,7 @@ Cursor loads user skills from `~/.agents/skills` on this machine. It does not lo
 ```text
 Make Cursor follow my shared agent instructions in every project, and confirm the skills from this repository are visible.
 
-Check that knowledge-bank, react-best-practices, and tough-critic resolve from ~/.agents/skills. Do not copy them unless one is missing.
+Check that clean-code, knowledge-bank, react-best-practices, and tough-critic resolve from ~/.agents/skills. Do not copy them unless one is missing.
 
 Cursor does not load ~/.agents/AGENTS.md globally. Add this User Rule in Customize, under Rules:
 
@@ -82,7 +84,7 @@ If you cannot edit User Rules yourself, show me that text and tell me to paste i
 
 Do not link these rules into a project's .cursor/rules unless I ask for that project. Those .mdc files are valid Cursor project rules with alwaysApply set, but the User Rule is what covers every project.
 
-When you finish, tell me to confirm the three skills under Customize → Skills.
+When you finish, tell me to confirm the four skills under Customize → Skills.
 ```
 
 `~/.agents/skills` stays on this machine. Cursor does not copy it to Cloud Agents, Agents Window remote SSH, or self-hosted workers. To use the same skills there, paste this as well:

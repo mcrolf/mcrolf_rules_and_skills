@@ -1,65 +1,23 @@
 ---
-description: Enforce Clean Code craftsmanship when writing or changing code: simplicity, clear names, small focused units, honest structure, and readable tests.
+description: Enforce Clean Code craftsmanship when writing or changing code. Before code changes, load the clean-code skill for names, functions, structure, errors, tests, and design smells.
 alwaysApply: true
 ---
 
 # Clean Code
 
-Write code that another developer can read, change, extend, and maintain without reconstructing the author's intent. Prefer clarity over cleverness. Follow the project's conventions first; apply these craftsmanship practices within them.
+Write code another developer can read, change, and extend without reconstructing the author's intent. Prefer clarity over cleverness. Follow the project's conventions first.
 
-Adapted from [Clean Code principles](summary of Robert C. Martin).
+Before writing, changing, or reviewing code, read and apply `~/.agents/skills/clean-code/SKILL.md`. That skill holds the working checks. Read `heuristics.md` beside it when the skill says to. If `~/.agents/skills/clean-code/SKILL.md` is missing and this rules repository is the workspace, read `skills/clean-code/SKILL.md` there. If neither file can be read, apply the standards below and say the skill was unavailable.
 
-## General Craftsmanship
+## Standards
 
-- Keep it simple. Reduce complexity; do not add abstractions, configuration, or indirection without a clear need.
-- Leave touched code a bit cleaner than you found it when that cleanup is local to the change. Do not expand into unrelated refactors.
-- Fix the root cause of bugs and design problems. Do not paper over symptoms with special cases when a clear local fix is available.
-- Be consistent with how similar things are already done in the codebase.
+- Keep it simple. Add abstraction, configuration, or indirection only when the change has a present need for it.
+- Leave touched code a bit cleaner when the cleanup is local to the change. Keep unrelated refactors out of the change.
+- Fix root causes. Use a special case only when a clear local fix is not available.
+- Name things with the project's domain language. A name says what the thing is or does.
+- Keep functions and types small, focused, and at one level of abstraction. Prefer few arguments and visible side effects.
+- Put intent in names and structure. Comment for intent, consequences, or warnings the code cannot carry.
+- Keep tests readable, fast, independent, and repeatable, and as clean as the code they protect.
+- Watch rigidity, fragility, immobility, needless complexity, needless repetition, and opacity. If a change would worsen one of these, choose the clearer structure or name the tradeoff before proceeding.
 
-## Names
-
-- Use descriptive, unambiguous, pronounceable, searchable names that make meaningful distinctions.
-- Align names with the project's domain language when a domain term exists.
-- Replace magic numbers and opaque literals with named constants when the meaning is not obvious at the use site.
-- Avoid encodings and type prefixes in names. Prefer names that say what the thing is or does.
-
-## Functions and Methods
-
-- Keep functions small and focused on one thing. Prefer fewer arguments.
-- Avoid flag arguments; split into clear methods instead when practical.
-- Prefer no surprising side effects. If a function mutates state or performs I/O, make that obvious from its name and place in the design.
-- Avoid negative conditionals when a positive form is clearer.
-- Use explanatory variables and encapsulate boundary conditions in one place instead of scattering edge-case logic.
-
-## Structure and Design
-
-- Separate concepts vertically; keep related code dense and close. Declare variables near their use; keep dependent and similar functions near each other.
-- Prefer downward call order: high-level overview first, details below.
-- Keep configurable values at high levels. Prevent over-configurability.
-- Depend on direct collaborators (Law of Demeter). Prefer dependency injection over hidden global lookup when wiring behavior.
-- Prefer polymorphism or clear strategy separation over growing switch/case or if/else chains when the project already uses that style for the problem.
-- Hide internal structure of objects. Prefer small types with a clear responsibility. Avoid hybrid "half object, half data bag" shapes when a clear boundary exists.
-- Prefer dedicated value objects over primitives when a primitive obscures meaning or invites mix-ups (for example IDs, money, quantities).
-
-## Comments
-
-- Prefer expressing intent in names and structure over comments.
-- Do not add redundant or obvious comments, or commented-out code; delete unused code.
-- Use comments for intent, clarification of non-obvious consequences, or warnings that code alone cannot carry safely.
-
-## Tests
-
-- Tests should be readable, fast, independent, and repeatable.
-- Prefer focused assertions that make failures obvious. One primary assert per test is a useful default when it stays clear; group closely related checks when splitting them would obscure the behavior under test.
-
-## Watch for These Smells
-
-Avoid introducing or expanding:
-
-- Rigidity: small changes cascade across many modules.
-- Fragility: one change breaks unrelated parts.
-- Immobility: useful logic cannot be reused without high risk or effort.
-- Needless complexity or needless repetition.
-- Opacity: code that resists understanding.
-
-When a change would worsen these, choose the clearer structure or call out the tradeoff before proceeding.
+These standards and the clean-code skill are an original working guide to principles associated with Robert C. Martin, *Clean Code*. They are not a reproduction of the book. Project conventions and `domain-language` win on conflict; name the conflict when it changes the result.

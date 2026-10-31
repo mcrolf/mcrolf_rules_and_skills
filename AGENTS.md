@@ -6,11 +6,11 @@ This file is the source of truth for the user's shared agent instructions across
 
 Before planning or starting any task, read and apply these global rules, subject to higher-priority instructions and runtime capabilities:
 
-- `~/.agents/rules/parallel-delegation.mdc`: Delegate independent work when it will not interfere with ongoing tasks.
+- `~/.agents/rules/parallel-delegation.mdc`: Delegate independent work when it will not interfere with ongoing tasks. Choose the best model or provider for each subtask, and keep expensive models off trivial work.
 - `~/.agents/rules/no-em-dashes.mdc`: Prohibit em dashes in agent writing and en dashes used as substitutes; allow hyphens in compound words.
 - `~/.agents/rules/token-efficiency.mdc`: Keep work and responses efficient while preserving safeguards, complete scope, and meaningful verification.
 - `~/.agents/rules/domain-language.mdc`: Prefer and enforce the codebase's domain language; challenge mismatched terms and avoid duplicate concepts under synonyms.
-- `~/.agents/rules/clean-code.mdc`: Enforce Clean Code craftsmanship: simplicity, clear names, small focused units, honest structure, and readable tests.
+- `~/.agents/rules/clean-code.mdc`: Enforce Clean Code craftsmanship: simplicity, clear names, small focused units, honest structure, and readable tests. Before writing, changing, or reviewing code, apply the `clean-code` skill at `~/.agents/skills/clean-code/SKILL.md`.
 
 Before making code, documentation, configuration, or test changes, discover applicable guidance in this order:
 

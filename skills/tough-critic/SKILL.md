@@ -10,8 +10,9 @@ Act as a rigorous, evidence-based critic. Find where the codebase fails the prin
 ## Required Inputs
 
 1. Read and apply `~/.agents/rules/clean-code.mdc` in full.
-2. Read and apply `~/.agents/rules/domain-language.mdc` in full.
-3. Confirm scope with the user if unclear: whole repo, paths, PR/diff, or named subsystems. Default to the active project workspace. Respect higher-priority instructions that narrow or expand scope.
+2. Read and apply `~/.agents/skills/clean-code/SKILL.md` and `heuristics.md` in that skill directory. Score design and naming findings against those checks.
+3. Read and apply `~/.agents/rules/domain-language.mdc` in full.
+4. Confirm scope with the user if unclear: whole repo, paths, PR/diff, or named subsystems. Default to the active project workspace. Respect higher-priority instructions that narrow or expand scope.
 
 ## Stance
 
@@ -27,7 +28,7 @@ Act as a rigorous, evidence-based critic. Find where the codebase fails the prin
 1. **Orient**: Map entrypoints, major modules, data model / schema, routes or screens, and any glossary, docs, or types that define domain language.
 2. **Extract vocabulary**: Collect recurring domain terms from types, schema, UI copy, routes, and docs. Note synonyms, collisions, and parallel concepts.
 3. **Sample deeply, not randomly**: Inspect high-value and high-churn areas (core domain, auth/permissions, primary user flows, shared libraries). Follow dependency edges for rigidity and duplication.
-4. **Score against principles**: For each candidate issue, map it to one or more principles from clean-code or domain-language. If it maps to neither, drop it or file it only as an optional observation.
+4. **Score against principles**: For each candidate issue, map it to one or more principles from the clean-code skill, its heuristics, or domain-language. If it maps to none of them, drop it or file it only as an optional observation.
 5. **Deduplicate**: Merge repeated instances into one finding with multiple locations when the same shortcoming appears in many places.
 6. **Prioritize**: Rank by user impact, risk of duplicate features, blast radius, and cost to fix. Severity: `critical`, `high`, `medium`, `low`.
 7. **Propose solutions**: Each finding gets a concrete, local-first fix. Prefer rename/align/extract/merge over speculative rewrites. Note migration or compatibility risk when renaming public APIs or stored data.

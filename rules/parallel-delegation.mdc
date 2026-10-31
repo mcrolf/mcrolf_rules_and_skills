@@ -1,5 +1,5 @@
 ---
-description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks.
+description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks. Choose the best model or provider for each subtask, and keep expensive models off trivial work.
 alwaysApply: true
 ---
 
@@ -16,4 +16,16 @@ Proactively delegate independent subtasks to available subagents when meaningful
 - Review and integrate delegated results, resolve conflicts, and perform appropriate validation before reporting the overall task complete. The primary agent remains responsible for the final result.
 - If priorities or shared resources change, coordinate, narrow, or stop affected delegated work before continuing. Never cancel an unrelated task without authorization.
 
-For example, delegate documentation research while implementing an independent component, or assign separate components to different agents. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.
+## Match the model to the task
+
+When the runtime can run subagents on different models or providers, choose the best model for that subtask. Different subtasks may use different providers. Select only from models the runtime lists as available. If it offers one model, use that model. If the user names a model or provider, use that choice.
+
+Judge fitness first: the model should be able to complete the subtask reliably. When two models are similarly capable, prefer the less expensive one.
+
+- Trivial or mechanical work, such as a narrow lookup, file inventory, formatting, simple extraction, or boilerplate, uses a fast, inexpensive model. Leave frontier and high-cost models for harder work.
+- Clear, bounded implementation uses a capable mid-tier model.
+- Hard reasoning, ambiguous design, architecture, security-sensitive judgment, and subtle debugging use the strongest fitting model, including a more expensive one when the task needs it.
+
+Match the subagent to the subtask. Use a cheaper model than the parent when the subtask is easier. Use a stronger model when the subtask needs more capability than a cheaper model can reliably provide.
+
+For example, delegate a documentation lookup to a fast, inexpensive model while a stronger model implements an independent component, or assign separate components to different agents and models. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.

@@ -9,7 +9,7 @@ Apply this skill when reading or writing React components. Prefer principles ove
 
 ## Related Guidance
 
-- Design, naming, structure, comments, and tests: apply `~/.agents/rules/clean-code.mdc`.
+- Design, naming, structure, comments, and tests: apply `~/.agents/rules/clean-code.mdc` and `~/.agents/skills/clean-code/SKILL.md`.
 - Domain terms for entities, roles, actions, screens, and props: apply `~/.agents/rules/domain-language.mdc`. Challenge mismatched vocabulary before inventing parallel UI or state concepts.
 - When TypeScript is in use, also load `typescript-best-practices` if available. Type-first modeling, discriminated unions, and boundary validation still apply inside React code.
 
@@ -90,4 +90,4 @@ If the project uses this layout, keep it; otherwise follow the repository's exis
 6. Non-reactive read inside Effect: `useEffectEvent`.
 7. Mutable non-visual value: ref.
 8. Shared UI or logic: extract a component or focused Hook.
-9. Naming and structure: domain-language and clean-code rules.
+9. Naming and structure: domain-language rule and the clean-code skill.
