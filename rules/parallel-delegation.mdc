@@ -1,5 +1,5 @@
 ---
-description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks. Choose the best model or provider for each subtask, and keep expensive models off trivial work.
+description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks. For each subtask, choose a model from the provider that fits — Codex, Claude, Cursor, or another listed provider — and keep expensive models off trivial work.
 alwaysApply: true
 ---
 
@@ -16,16 +16,20 @@ Proactively delegate independent subtasks to available subagents when meaningful
 - Review and integrate delegated results, resolve conflicts, and perform appropriate validation before reporting the overall task complete. The primary agent remains responsible for the final result.
 - If priorities or shared resources change, coordinate, narrow, or stop affected delegated work before continuing. Never cancel an unrelated task without authorization.
 
-## Match the model to the task
+# Use Models from Other Providers
 
-When the runtime can run subagents on different models or providers, choose the best model for that subtask. Different subtasks may use different providers. Select only from models the runtime lists as available. If it offers one model, use that model. If the user names a model or provider, use that choice.
+Choosing the provider and model is a primary decision for every delegated subtask, on par with the decision to delegate. Codex, Claude, Cursor, and every other provider the runtime lists are in scope. Use another provider's model whenever it fits the subtask better than the parent model.
 
-Judge fitness first: the model should be able to complete the subtask reliably. When two models are similarly capable, prefer the less expensive one.
+Stay on the parent model only when it is the best fit, or when the runtime lists no alternative. Select only from models the runtime lists as available. If it offers one model, use that model. If the user names a model or provider, use that choice.
 
-- Trivial or mechanical work, such as a narrow lookup, file inventory, formatting, simple extraction, or boilerplate, uses a fast, inexpensive model. Leave frontier and high-cost models for harder work.
-- Clear, bounded implementation uses a capable mid-tier model.
-- Hard reasoning, ambiguous design, architecture, security-sensitive judgment, and subtle debugging use the strongest fitting model, including a more expensive one when the task needs it.
+Set the model explicitly when that is how the runtime selects a provider. An omitted model stays on the parent provider, so set one whenever another listed model is the better fit. Different subtasks in the same turn should use different providers when their demands differ.
 
-Match the subagent to the subtask. Use a cheaper model than the parent when the subtask is easier. Use a stronger model when the subtask needs more capability than a cheaper model can reliably provide.
+Judge fitness first: the model should be able to complete the subtask reliably. When two models are similarly capable, prefer the less expensive one, including a cheaper model from another provider.
 
-For example, delegate a documentation lookup to a fast, inexpensive model while a stronger model implements an independent component, or assign separate components to different agents and models. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.
+- Trivial or mechanical work, such as a narrow lookup, file inventory, formatting, simple extraction, or boilerplate, uses a fast, inexpensive model from whichever provider offers one. Leave frontier and high-cost models for harder work.
+- Clear, bounded implementation uses a capable mid-tier model from Codex, Claude, Cursor, or another listed provider.
+- Hard reasoning, ambiguous design, architecture, security-sensitive judgment, and subtle debugging use the strongest fitting model. Use a more expensive model from another provider when the task needs that capability.
+
+Match the subagent to the subtask. Use a cheaper model than the parent when the subtask is easier, including a cheaper model from a different provider. Use a stronger model from another provider when the subtask needs more capability than the parent or a cheaper model can reliably provide.
+
+For example, send a documentation lookup to a fast, inexpensive model while a stronger model from another provider implements an independent component. Two independent components can run at once on different providers, such as Codex for one and Claude or Cursor for the other. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.
