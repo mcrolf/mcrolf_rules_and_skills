@@ -5,7 +5,7 @@ description: Compiles a project knowledge bank from the codebase and user attach
 
 # Knowledge Bank
 
-Build a durable, evidence-based document set a new contributor or later agent can use without rediscovering the system. Use the project's domain language. Read `~/.agents/rules/domain-language.mdc` before the glossary or any new name.
+Build a durable, evidence-based document set a new contributor or later agent can use without rediscovering the system. Use the project's domain language. Read `~/.agents/rules/domain-language.md` before the glossary or any new name.
 
 ## Goal
 

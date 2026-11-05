@@ -9,10 +9,20 @@ This repository contains:
 | Path | Role |
 | --- | --- |
 | `AGENTS.md` | Discovery, precedence, and where to read rules and skills |
-| `rules/*.mdc` | Always-on rules: parallel delegation, no em dashes, token efficiency, domain language, clean code |
+| `rules/*.md` | Always-on rules: parallel delegation, no em dashes, token efficiency, domain language, clean code. `rules/*.mdc` symlinks to the same file for Cursor |
 | `skills/*/SKILL.md` | `clean-code`, `knowledge-bank`, `react-best-practices`, `tough-critic` |
 
 Skills and `AGENTS.md` look for `~/.agents/rules` and `~/.agents/skills`. A clone by itself is not enough. Open this repository in a provider you already use, paste the shared prompt, then paste the prompt for each provider you want.
+
+## One rule, no AGENTS.md
+
+Copy or link that rule's `.md` file into the directory the harness already loads. The file is the rule. `description` and `alwaysApply` are Cursor fields on top of the markdown.
+
+- Claude reads `.md` in `.claude/rules/` and `~/.claude/rules/`. These rules set no `paths`, so Claude loads them every session and ignores the Cursor fields.
+- Cursor's project and user rule loader reads `.mdc` in `.cursor/rules/` and `~/.cursor/rules/`. Link `rules/<name>.mdc`. That name points at the `.md` file. Saving a copy into `.cursor/rules/` means saving the `.md` contents under the `.mdc` name.
+- A harness that collects `*.md` from a rules directory can take the `.md` file as-is.
+
+Codex loads instructions from `AGENTS.md`. Name this rule from an `AGENTS.md` that session already reads, or paste the rule there.
 
 ## Prompt your agents to handle this for you
 Follow the instructions below to get your agents to handle setup and configuration for you.
@@ -27,7 +37,7 @@ Install the rules and skills in this repository as my personal agent setup.
 Link this repo into ~/.agents. Do not copy file contents.
 
 - Link AGENTS.md to ~/.agents/AGENTS.md.
-- Link each file in rules/ into ~/.agents/rules/.
+- Link each rules/*.md file into ~/.agents/rules/. Leave the .mdc symlinks out of that directory so the same rule is not applied twice.
 - Link each directory in skills/ into ~/.agents/skills/, keeping the directory name.
 
 If a destination is already a real directory, leave it in place and tell me so I can move it aside. Leave any other skills already in ~/.agents/skills alone.
@@ -60,7 +70,7 @@ Claude Code reads `CLAUDE.md`, not `AGENTS.md`. It loads skills from `~/.claude/
 ```text
 Load my shared agent instructions and the skills in this repository for every Claude Code project.
 
-Write ~/.claude/CLAUDE.md so it imports ~/.agents/AGENTS.md with @~/.agents/AGENTS.md and nothing else. Do not copy the rule text. Do not put the .mdc files in ~/.claude/rules. Claude user rules use different frontmatter, and the import is what tells Claude to read ~/.agents/rules.
+Write ~/.claude/CLAUDE.md so it imports ~/.agents/AGENTS.md with @~/.agents/AGENTS.md and nothing else. Do not copy the rule text. Do not also link these rules into ~/.claude/rules while that import is in place, or Claude loads each rule twice.
 
 Link each skill directory from this repo into ~/.claude/skills/, keeping the directory name. Claude names a skill after its directory. If a destination is already a real directory, leave it and tell me. If this Claude instance uses CLAUDE_CONFIG_DIR, use that directory instead of ~/.claude.
 
@@ -82,7 +92,7 @@ Before starting any task, read and follow ~/.agents/AGENTS.md. It is the source 
 
 If you cannot edit User Rules yourself, show me that text and tell me to paste it under Customize → Rules → User Rules. Do not inline the rule files into that text. The rule tells Agent to read the file.
 
-Do not link these rules into a project's .cursor/rules unless I ask for that project. Those .mdc files are valid Cursor project rules with alwaysApply set, but the User Rule is what covers every project.
+Do not link these rules into a project's .cursor/rules unless I ask for that project. The .mdc names are symlinks to the .md rules, with alwaysApply set, and Cursor loads those names from .cursor/rules. The User Rule is what covers every project.
 
 When you finish, tell me to confirm the four skills under Customize → Skills.
 ```

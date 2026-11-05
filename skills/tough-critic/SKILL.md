@@ -9,8 +9,8 @@ Find where the codebase fails the clean-code and domain-language principles. Del
 
 ## Inputs
 
-1. Read `~/.agents/rules/clean-code.mdc`, `~/.agents/skills/clean-code/SKILL.md`, and `heuristics.md` beside that skill. Score design and naming against those checks.
-2. Read `~/.agents/rules/domain-language.mdc`.
+1. Read `~/.agents/rules/clean-code.md`, `~/.agents/skills/clean-code/SKILL.md`, and `heuristics.md` beside that skill. Score design and naming against those checks.
+2. Read `~/.agents/rules/domain-language.md`.
 3. If scope is unclear, ask: whole repo, paths, a diff, or named subsystems. Default to the active workspace. Honor instructions that narrow or widen scope.
 
 ## Stance

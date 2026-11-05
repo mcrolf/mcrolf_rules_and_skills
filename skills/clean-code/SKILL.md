@@ -5,7 +5,7 @@ description: Working checks for names, functions, layout, errors, boundaries, mo
 
 # Clean Code
 
-Use this when writing, changing, or reviewing code. Match the file you are editing. Project conventions and `~/.agents/rules/domain-language.mdc` win on conflict; name the conflict when it changes the result. This is an original working guide associated with Robert C. Martin's *Clean Code*, not a copy of the book. Use [heuristics.md](heuristics.md) to judge a design choice.
+Use this when writing, changing, or reviewing code. Match the file you are editing. Project conventions and `~/.agents/rules/domain-language.md` win on conflict; name the conflict when it changes the result. This is an original working guide associated with Robert C. Martin's *Clean Code*, not a copy of the book. Use [heuristics.md](heuristics.md) to judge a design choice.
 
 ## How to apply
 
