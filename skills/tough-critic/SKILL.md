@@ -1,74 +1,53 @@
 ---
 name: tough-critic
-description: Critically analyzes a codebase against clean-code and domain-language principles, then delivers an HTML or PDF report of shortcomings with proposed solutions. Use when the user asks for tough-critic, a craftsmanship critique, domain-language audit, clean-code review of a codebase, or a findings report of design and naming debt.
+description: Critiques a codebase against clean-code and domain-language, then writes an HTML or PDF report of shortcomings and fixes. Use when the user asks for tough-critic, a craftsmanship critique, a domain-language audit, a clean-code review of a codebase, or a findings report of design and naming debt.
 ---
 
 # Tough Critic
 
-Act as a rigorous, evidence-based critic. Find where the codebase fails the principles in the clean-code and domain-language rules. Do not rewrite the product in this pass unless the user asks; the deliverable is a report of issues and proposed solutions.
+Find where the codebase fails the clean-code and domain-language principles. Deliver a report of issues and proposed fixes. Do not change the product in this pass unless the user asks.
 
-## Required Inputs
+## Inputs
 
-1. Read and apply `~/.agents/rules/clean-code.mdc` in full.
-2. Read and apply `~/.agents/skills/clean-code/SKILL.md` and `heuristics.md` in that skill directory. Score design and naming findings against those checks.
-3. Read and apply `~/.agents/rules/domain-language.mdc` in full.
-4. Confirm scope with the user if unclear: whole repo, paths, PR/diff, or named subsystems. Default to the active project workspace. Respect higher-priority instructions that narrow or expand scope.
+1. Read `~/.agents/rules/clean-code.mdc`, `~/.agents/skills/clean-code/SKILL.md`, and `heuristics.md` beside that skill. Score design and naming against those checks.
+2. Read `~/.agents/rules/domain-language.mdc`.
+3. If scope is unclear, ask: whole repo, paths, a diff, or named subsystems. Default to the active workspace. Honor instructions that narrow or widen scope.
 
 ## Stance
 
-- Be tough on clarity, naming, duplication, and design smells. Be fair: every finding needs concrete evidence in the codebase.
-- Prefer the project's established conventions and domain terms over generic industry synonyms.
-- Do not invent issues to fill a quota. A short honest report beats a padded one.
-- Separate facts (what the code does / how it is named) from judgment (why it violates a principle) and from recommendation (how to fix it).
-- Call out Bounded Context ambiguity when the same word means different things in different areas; do not force a false single vocabulary across contexts.
-- Skip pure style nits already enforced by the project's formatter/linter unless they hide a real understandability problem.
+Be tough on clarity, naming, duplication, and design smells. Every finding needs evidence in the codebase. Prefer the project's conventions and domain terms. Do not invent issues to fill a quota. Separate fact (what the code does or how it is named), judgment (which principle it violates), and the fix. When one word means different things in different areas, say so; do not force one vocabulary across bounded contexts. Skip formatter or linter nits unless they hide a real understanding problem.
 
-## Analysis Workflow
+## Workflow
 
-1. **Orient**: Map entrypoints, major modules, data model / schema, routes or screens, and any glossary, docs, or types that define domain language.
-2. **Extract vocabulary**: Collect recurring domain terms from types, schema, UI copy, routes, and docs. Note synonyms, collisions, and parallel concepts.
-3. **Sample deeply, not randomly**: Inspect high-value and high-churn areas (core domain, auth/permissions, primary user flows, shared libraries). Follow dependency edges for rigidity and duplication.
-4. **Score against principles**: For each candidate issue, map it to one or more principles from the clean-code skill, its heuristics, or domain-language. If it maps to none of them, drop it or file it only as an optional observation.
-5. **Deduplicate**: Merge repeated instances into one finding with multiple locations when the same shortcoming appears in many places.
-6. **Prioritize**: Rank by user impact, risk of duplicate features, blast radius, and cost to fix. Severity: `critical`, `high`, `medium`, `low`.
-7. **Propose solutions**: Each finding gets a concrete, local-first fix. Prefer rename/align/extract/merge over speculative rewrites. Note migration or compatibility risk when renaming public APIs or stored data.
+1. Map entrypoints, major modules, schema, routes or screens, and any glossary or types that define domain language.
+2. Collect recurring terms. Note synonyms, collisions, and parallel concepts.
+3. Inspect high-churn, high-value areas (core domain, auth, primary flows, shared libraries) and follow edges for rigidity and duplication.
+4. Map each candidate to a clean-code check, a heuristic, or domain-language. Drop it if it maps to none. Keep it as an optional observation only when that is honestly useful.
+5. Merge repeated instances into one finding with several locations.
+6. Rank by user impact, duplicate-feature risk, blast radius, and fix cost. Severity is `critical`, `high`, `medium`, or `low`.
+7. Give each finding a concrete local fix: rename, align, extract, or merge before a speculative rewrite. Note migration risk for a public API or stored data.
 
-## Finding Shape
-
-Record every retained finding with:
+## Finding
 
 | Field | Meaning |
-|-------|---------|
-| ID | Stable short id (`CC-01`, `DL-02`) |
+| --- | --- |
+| ID | Short stable id (`CC-01`, `DL-02`) |
 | Title | One-line shortcoming |
-| Principle | Clean-code or domain-language principle violated |
-| Severity | critical / high / medium / low |
-| Evidence | File paths, symbols, and brief quotes or behavior summary |
+| Principle | Clean-code or domain-language check violated |
+| Severity | critical, high, medium, or low |
+| Evidence | Paths, symbols, and a brief quote or behavior |
 | Why it matters | User, maintainability, or duplication risk |
-| Proposed solution | Specific remediation steps |
-| Effort | S / M / L rough estimate |
+| Proposed solution | Specific remediation |
+| Effort | S, M, or L |
 
-## Report Deliverable
+## Report
 
-Produce a self-contained report the user can open and share.
+Write a self-contained file from [report-template.html](report-template.html). Fill every section and remove unused placeholder rows. Default path: `./reports/tough-critic-YYYY-MM-DD.html`, or a path the user names.
 
-1. Prefer **HTML** written from [report-template.html](report-template.html). Fill every section; remove unused placeholder rows. Save under the project (for example `./reports/tough-critic-YYYY-MM-DD.html`) or a path the user specifies.
-2. If the user asks for **PDF**, generate the HTML first, then convert with an available tool (`npx` playwright/puppeteer print-to-PDF, `pandoc`, macOS `cupsfilter`, or similar). If conversion is unavailable, deliver the HTML and state that it is print-ready (browser Print to PDF) plus what blocked native PDF output.
-3. After writing the file, give the user the absolute path and a short executive summary in chat: counts by severity, top themes, and any blocked investigation.
+If they ask for PDF, write the HTML first, then convert with an available tool (Playwright or Puppeteer print, pandoc, or macOS `cupsfilter`). If conversion fails, deliver the HTML, say it is print-ready, and name what blocked PDF.
 
-### Report Contents (required)
+Include title, date, scope, and commit or branch; an executive summary with themes, counts, and highest risks; a domain-language snapshot of canonical terms and conflicting synonyms; findings sorted by severity then effort, each with a solution; a short "not a problem" note only when it prevents a bad cleanup; and a method note naming the rules, the areas inspected, and the limits.
 
-- Title, date, scope, and commit/branch if available
-- Executive summary (themes, counts, highest risks)
-- Domain language snapshot (canonical terms vs conflicting synonyms)
-- Findings list (table or cards) sorted by severity then effort
-- Proposed solution per finding
-- Out of scope / explicitly not problems (brief, only when useful to prevent misguided cleanup)
-- Method note: rules used, areas inspected, limits of the review
+Then give the absolute path and a short summary: counts by severity, top themes, and any blocked investigation.
 
-## Quality Bar
-
-- Evidence must be checkable by opening the cited paths.
-- Solutions must be actionable by another engineer without re-doing the analysis.
-- Do not "fix" findings in the codebase during the critique unless the user explicitly asks to implement afterward.
-- Follow no-em-dashes and token-efficiency rules in the report prose and chat summary.
+Evidence must be checkable by opening the cited paths. A fix must be actionable without repeating the analysis. Do not edit the codebase during the critique unless the user asks. Follow the no-em-dash and token-efficiency rules in the report and the summary.

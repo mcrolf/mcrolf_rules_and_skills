@@ -1,51 +1,29 @@
 ---
 name: knowledge-bank
-description: Compiles a project knowledge bank from codebase and user attachments covering architecture, user flows, features, domain glossary, data models, and other essentials. Use when the user asks for knowledge-bank, project documentation pack, architecture docs, domain glossary, user flow diagrams, feature inventory, or to document essential project knowledge.
+description: Compiles a project knowledge bank from the codebase and user attachments, covering architecture, user flows, features, a domain glossary, data models, and other essentials. Use when the user asks for knowledge-bank, a project documentation pack, architecture docs, a domain glossary, user flow diagrams, a feature inventory, or to document essential project knowledge.
 ---
 
 # Knowledge Bank
 
-Build a durable, evidence-based set of project documents that a new contributor (or future agent) can use without rediscovering the system from scratch. Prefer the project's own domain language. Read `~/.agents/rules/domain-language.mdc` before writing the glossary or naming anything in the bank.
+Build a durable, evidence-based document set a new contributor or later agent can use without rediscovering the system. Use the project's domain language. Read `~/.agents/rules/domain-language.mdc` before the glossary or any new name.
 
 ## Goal
 
-Produce a knowledge bank directory of markdown (and diagram) documents covering at least:
+Write markdown and diagrams covering at least: architecture, user flows, features, a domain glossary, data models, and other evidenced essentials (auth, environments, integrations, runbook pointers, decision records).
 
-- Project architecture
-- User flow diagrams
-- Feature details
-- Domain language glossary
-- Data models
-- Other essentials discovered in the project (auth model, environments, integrations, runbooks pointers, decision records)
+Do not invent product facts. Mark unknowns. Cite a repo path or attachment for any non-obvious claim.
 
-Do not invent product facts. Mark unknowns explicitly. Cite source paths or attachment names for non-obvious claims.
+## Attachments first
 
-## Step 0: Prompt for Attachments (required)
+On the first response after this skill is invoked, ask for source material, even if the repo already has docs. Wait for a reply, or an explicit "proceed with repo only", before writing. Skip the wait only when materials are already attached or the user said to continue.
 
-Before deep compilation, ask the user to attach or point to anything that should feed the bank. Do this in the first response after the skill is invoked, even if the repo already has docs.
+Ask for briefs, PRDs, roadmaps, acceptance criteria, architecture diagrams, ADRs, runbooks, onboarding docs, glossaries, style guides, schema dumps, ERDs, OpenAPI, GraphQL, or proto specs, design exports, permission matrices, compliance notes, analytics catalogs, feature-flag lists, and anything else they treat as source of truth. Chat files, absolute paths, or URLs are fine.
 
-Prompt for materials such as:
+Inventory attachments in the index (title, type, origin) and fold them into the relevant docs. Prefer attachment language over speculation. When an attachment and the code disagree, use the codebase term and note the conflict in the glossary.
 
-- Product briefs, PRDs, roadmaps, acceptance criteria
-- Existing architecture diagrams, ADRs, runbooks, onboarding docs
-- Domain glossaries, brand or content style guides
-- Schema dumps, ERDs, API specs (OpenAPI/GraphQL), proto files
-- Design files or exported flows (Figma links, screenshots, PDF wireflows)
-- Role/permission matrices, compliance notes
-- Analytics event catalogs, feature flags lists
-- Anything else the user considers source-of-truth
+## Output
 
-Ask them to attach files in chat when possible, or give absolute paths / URLs. Wait for their reply (or an explicit "proceed with repo only") before writing the bank, unless they already attached materials or said to continue without waiting.
-
-When attachments arrive, inventory them in the bank index (title, type, origin) and fold their content into the relevant docs. Prefer attachment language when it conflicts with speculative wording; prefer codebase terms when attachment and code disagree, and note the conflict in the glossary.
-
-## Output Location
-
-Default: `./docs/knowledge-bank/` in the active project workspace (create if missing).
-
-If the user names another path, use that. Keep filenames stable and link everything from `INDEX.md`.
-
-Suggested layout:
+Default: `./docs/knowledge-bank/` in the active workspace. Use another path if the user names one. Keep filenames stable and link them from `INDEX.md`. Start the index from [templates/INDEX.md](templates/INDEX.md).
 
 ```text
 docs/knowledge-bank/
@@ -55,43 +33,31 @@ docs/knowledge-bank/
   features.md
   domain-glossary.md
   data-models.md
-  integrations.md          # optional if needed
-  environments-ops.md      # optional if needed
-  sources.md               # repo paths + attachments used
-  assets/                  # copied or exported diagrams/images if useful
+  integrations.md
+  environments-ops.md
+  sources.md
+  assets/
 ```
 
-Add or omit optional docs based on what exists. Do not create empty filler files; if a topic has no evidence, say so in `INDEX.md` under Gaps.
+`integrations.md`, `environments-ops.md`, and `assets/` are optional. Do not create empty files. A topic with no evidence goes under Gaps in `INDEX.md`.
 
-## Compilation Workflow
+## Workflow
 
-1. **Attachment gate**: Run Step 0. Incorporate any provided materials.
-2. **Orient the repo**: Entrypoints, package/app layout, frameworks, deploy targets, major folders, existing `README`/`docs`/`AGENTS.md`.
-3. **Architecture**: Runtimes, bounded areas/modules, request/data flow, key libraries, auth boundaries, background jobs, external services. Prefer one overview diagram plus short prose.
-4. **User flows**: Primary personas/roles and happy-path journeys (sign-up, core loop, settings, admin if present). Use Mermaid `flowchart` or `sequenceDiagram` in `user-flows.md`. Label steps with domain terms from the glossary.
-5. **Features**: Inventory shipped capabilities grouped by area. For each: purpose, entry points (routes/screens/commands), primary actors, dependencies, flags if any. Skip wishlist items unless clearly documented as planned.
-6. **Domain glossary**: Canonical terms, definitions, aliases/synonyms to avoid, where defined in code or docs, and bounded-context notes when the same word differs by area. Align with domain-language rules; challenge collisions instead of flattening them.
-7. **Data models**: Core entities/tables/collections, relationships, ownership, identity fields, lifecycle states. Prefer Mermaid `erDiagram` or structured tables derived from schema/types. Note migrations or multi-store splits when relevant.
-8. **Other essentials**: Only when evidenced: integrations, env/config map, observability, permission model, test strategy pointers, important scripts.
-9. **Sources and gaps**: List every major source (repo path or attachment). List open questions and missing materials for a later refresh.
-10. **Index**: `INDEX.md` summarizes purpose, how to use the bank, doc links, severity of gaps, and last-updated date/revision.
+1. Run the attachment step and incorporate what they provide.
+2. Orient: entrypoints, package layout, frameworks, deploy targets, major folders, and existing README, docs, and AGENTS.md.
+3. Architecture: runtimes, modules, request and data flow, key libraries, auth boundaries, background jobs, external services. One overview diagram plus short prose.
+4. User flows: primary roles and happy paths (sign-up, core loop, settings, admin when present). Mermaid `flowchart` or `sequenceDiagram` in `user-flows.md`, labeled with glossary terms.
+5. Features: shipped capabilities by area. For each, record purpose, entry points, actors, dependencies, and flags. Skip wishlist items unless they are documented as planned.
+6. Glossary: canonical term, definition, aliases to avoid, where it is defined, and a bounded-context note when one word differs by area. Do not flatten a collision.
+7. Data models: entities, relationships, ownership, identity, lifecycle. Mermaid `erDiagram` or tables from schema or types. Note migrations or multi-store splits.
+8. Other essentials, only when evidenced: integrations, env and config, observability, permissions, test pointers, important scripts.
+9. Sources and gaps: every major repo path or attachment, plus open questions.
+10. Index: purpose, how to use the bank, links, gap severity, and last-updated date. If a bank already exists, update it in place, keep filenames, and note what changed.
 
-## Writing Standards
+## Writing and done
 
-- Clear and concise. Absolute paths in the chat summary when pointing the user at files.
-- Use the project's domain language throughout; do not rename concepts for taste.
-- Diagrams in Mermaid inside markdown unless the user requires another format.
-- Quote or paraphrase attachments with attribution; do not dump huge verbatim copyrighted specs when a structured summary suffices.
-- Follow no-em-dashes and token-efficiency guidance in prose.
-- Refresh mode: if a knowledge bank already exists, update in place, keep stable filenames, and note what changed in `INDEX.md`.
+Be concise. Use domain language. Diagrams are Mermaid in markdown unless the user asks for another format. Summarize long copyrighted specs; do not paste them. Follow the no-em-dash and token-efficiency rules.
 
-## Done Criteria
+Done when the user was asked for attachments or waived that step, `INDEX.md` and the evidenced core docs exist, and glossary, features, and architecture share terms. In chat, give the absolute bank path, what was included, what is missing, and any attachment-versus-code conflict.
 
-- User was prompted for attachments (or explicitly waived).
-- `INDEX.md` plus the core docs exist for topics with evidence.
-- Glossary and feature/architecture docs agree on terminology.
-- Chat reply gives the absolute path to the bank, what was included, what was missing, and any conflicts between attachments and code.
-
-## Optional Follow-ups
-
-Only if the user asks: export PDF/HTML of the bank, deepen one doc, or reconcile glossary conflicts in the codebase (that may use tough-critic or direct refactors).
+Export, a single-doc expansion, or glossary fixes in code happen only if the user asks.

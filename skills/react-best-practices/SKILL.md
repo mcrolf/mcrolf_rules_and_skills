@@ -1,93 +1,87 @@
 ---
 name: react-best-practices
-description: Provides React principles for hooks, effects, refs, state, lists, and component design. Covers escape hatches, anti-patterns, and correct effect usage. Must use when reading or writing React components (.tsx, .jsx files with React imports).
+description: React principles for hooks, effects, refs, state, lists, and component design, including escape hatches and correct effect usage. Must use when reading or writing React components (.tsx, .jsx files with React imports).
 ---
 
 # React Best Practices
 
-Apply this skill when reading or writing React components. Prefer principles over rote patterns. Follow the active project's React and TypeScript conventions first.
+Apply this when reading or writing React components. Prefer principles over rote patterns. Follow the project's React and TypeScript conventions first. Names and structure follow the domain-language rule and the clean-code skill. When the project uses TypeScript, also load `typescript-best-practices` if that skill exists.
 
-## Related Guidance
+## Effects are escape hatches
 
-- Design, naming, structure, comments, and tests: apply `~/.agents/rules/clean-code.mdc` and `~/.agents/skills/clean-code/SKILL.md`.
-- Domain terms for entities, roles, actions, screens, and props: apply `~/.agents/rules/domain-language.mdc`. Challenge mismatched vocabulary before inventing parallel UI or state concepts.
-- When TypeScript is in use, also load `typescript-best-practices` if available. Type-first modeling, discriminated unions, and boundary validation still apply inside React code.
+Effects synchronize React with an external system. Most component logic does not belong in an Effect. Before adding one, try render, an event handler, or a framework or data library.
 
-## Core Principle: Effects Are Escape Hatches
+Use Effects for browser APIs, non-React libraries, window or document listeners, and imperative non-React DOM (media, maps, host modals). Prefer React Query or the project's data library over fetch-in-Effect when that stack exists.
 
-Effects synchronize React with external systems. Most component logic should not use Effects. Before adding one, ask whether the work can happen during render, in an event handler, or via a framework/data library instead.
+## Prefer these over Effects
 
-Use Effects for external systems: browser APIs, third-party non-React libraries, window/document listeners, imperative non-React DOM (media, maps, host modals), and similar subscriptions. Prefer React Query or framework data fetching over ad-hoc fetch-in-Effect when the project already has that stack.
-
-## Prefer These Over Effects
-
-- Derived values: compute from props and state during render. Do not mirror props/state into other state via Effect.
-- Expensive pure calculations: memoize only when measured or clearly costly; do not use Effect plus state as a cache.
+- Derived values: compute from props and state during render. Do not mirror them into other state with an Effect.
+- Expensive pure calculations: memoize only when measured or clearly costly. Do not cache with Effect plus state.
 - Resetting state when an identity changes: remount with a stable `key` on the subtree that owns the state.
-- User-triggered logic: put it in the event handler that caused it (notifications, analytics, navigation after click).
-- Notifying parents: update parent and child together in the same event, or make the component fully controlled. Do not Effect-sync local state upward.
-- Multi-step reactions to one event: keep the chain in the event handler with derived values, not a cascade of Effects.
+- User-triggered work: put it in the event handler that caused it.
+- Notifying parents: update parent and child in the same event, or make the component fully controlled. Do not Effect-sync local state upward.
+- Several reactions to one event: keep the chain in the event handler. Do not cascade Effects.
 
-## Effect Dependencies and Cleanup
+## Effect dependencies and cleanup
 
-- Never suppress `react-hooks/exhaustive-deps` to silence warnings. Fix the dependency model.
-- Prefer functional state updaters when the next value depends on the previous, so the Effect does not need that state as a dependency.
-- Build options objects and unstable callbacks inside the Effect, or stabilize them deliberately, so new identities do not retrigger sync work every render.
-- Use `useEffectEvent` (when available) for non-reactive logic read inside an Effect: latest props/callbacks without adding them as reactive dependencies that would restart the sync.
-- Every subscription, timer, connection, and listener must clean up. Data fetches started in Effects should ignore or abort stale responses after deps change or unmount.
-- Development double-mounting exists to prove cleanup is correct. Do not guard with "run once" refs to hide missing cleanup.
+- Never suppress `react-hooks/exhaustive-deps`. Fix the dependency model.
+- Prefer a functional state updater when the next value depends on the previous, so that state is not an Effect dependency.
+- Build options objects and unstable callbacks inside the Effect, or stabilize them, so a new identity does not retrigger the sync.
+- Use `useEffectEvent` when it exists for a non-reactive read inside an Effect: latest props or callbacks without a dependency that restarts the sync.
+- Clean up every subscription, timer, connection, and listener. Ignore or abort a fetch after deps change or the component unmounts.
+- Development double-mounting proves cleanup. Do not hide missing cleanup with a "run once" ref.
 
 ## Refs
 
 - Refs hold values that must not drive rendering: timer IDs, DOM nodes, previous values, imperative handles.
 - Do not read or write `ref.current` during render. Touch refs in event handlers and Effects.
-- For dynamic lists of DOM nodes, use a ref callback (often with a Map keyed by item id), not hooks inside loops.
-- Expose imperative parent APIs sparingly with `useImperativeHandle`; limit the surface to what the parent truly needs.
+- For a dynamic list of DOM nodes, use a ref callback (often a Map keyed by item id), not hooks inside a loop.
+- Expose an imperative parent API sparingly with `useImperativeHandle`, and only the surface the parent needs.
 
-## Custom Hooks
+## Custom hooks
 
-- Custom Hooks share stateful logic; each call gets its own state instance.
-- Name something `useXxx` only if it calls Hooks. Pure helpers stay ordinary functions.
-- Prefer focused, concrete Hooks (`useChatRoom`, `useOnlineStatus`) over generic lifecycle wrappers (`useMount`, `useEffectOnce`) that hide dependencies from the linter and reader.
+- A custom Hook shares stateful logic. Each call gets its own state.
+- Name it `useXxx` only if it calls Hooks. Pure helpers stay ordinary functions.
+- Prefer a focused Hook (`useChatRoom`, `useOnlineStatus`) over a lifecycle wrapper (`useMount`, `useEffectOnce`) that hides dependencies.
 
-## Components, State, and Composition
+## Components, state, and composition
 
-- Keep components small and single-purpose. Extract repeated UI into dedicated components. Defer broader craftsmanship (size, coupling, comments, smells) to clean-code.
-- Name components, props, events, and view-model fields with the project's domain language. Do not introduce synonym props or screens that duplicate existing concepts.
-- Prefer composition (`children`, slots) over deep prop drilling. Use Context for truly cross-cutting values, not as a default for every shared prop.
-- Co-locate state with the components that use it. Lift only when siblings must share it.
-- Prefer controlled components when the parent must own the value; uncontrolled when ownership can stay local.
-- Use a reducer when several related values update together or transition rules are non-trivial.
-- Reach for `flushSync` only when you must read layout from the DOM immediately after a state update in the same event.
+- Keep a component small and single-purpose. Extract repeated UI. Leave broader craftsmanship to the clean-code skill.
+- Name components, props, events, and view-model fields with the project's domain language. Do not add a synonym prop or screen for an existing concept.
+- Prefer composition (`children`, slots) over deep prop drilling. Use Context for a truly cross-cutting value, not as the default for every shared prop.
+- Co-locate state with the components that use it. Lift it only when siblings must share it.
+- Controlled when the parent must own the value; uncontrolled when ownership can stay local.
+- Use a reducer when several related values update together or the transitions are non-trivial.
+- Use `flushSync` only to read layout from the DOM immediately after a state update in the same event.
 
-## Lists and Keys
+## Lists and keys
 
-- Give list items stable unique keys from identity (ids), not array indexes, especially when order can change.
-- Put `key` on the element created at the map site, not on an inner node inside the child component.
-- Changing `key` remounts the subtree; use that deliberately for identity resets, not casually.
+- Key list items with a stable id, not the array index, when order can change.
+- Put `key` on the element created at the map site, not on an inner node of the child.
+- Changing `key` remounts the subtree. Use that for an identity reset, not casually.
 
-## Rendering and Props
+## Rendering and props
 
-- Prefer simple conditional rendering: `&&` for optional UI, ternary for either/or, and extracted variables/functions when branches multiply.
-- Destructure props in the parameter list when it stays clear. Supply defaults for optional props at the boundary.
-- Keep prop names aligned with domain language and existing component APIs in the repo.
+- `&&` for optional UI, a ternary for either/or, and an extracted variable or function when branches multiply.
+- Destructure props in the parameter list when that stays clear. Default optional props at the boundary.
+- Keep prop names aligned with domain language and existing component APIs.
 
-## Project Data Layout (When Present)
+## Project data layout
 
-If the project uses this layout, keep it; otherwise follow the repository's existing structure.
+If the project uses this layout, keep it. Otherwise follow the repository.
 
-- Static config, lookup tables, and constants: `./src/lib` modules.
-- Shared dynamic data types (API, records, shared props): `./src/types/types.ts` or the project's equivalent types entrypoint.
-- Import static data from lib modules and types with `import type` where appropriate.
+- Static config, lookup tables, and constants live in `./src/lib`.
+- Shared dynamic data types live in `./src/types/types.ts` or the project's types entry.
+- Import static data from lib modules, and types with `import type` where that fits.
 
-## Decision Order
+## Decision order
 
 1. User interaction: event handler.
-2. Value from props/state: compute during render.
+2. Value from props or state: compute during render.
 3. Expensive pure work: memoize only when justified.
 4. Reset state on identity change: `key`.
-5. Sync with an external system: Effect with cleanup.
-6. Non-reactive read inside Effect: `useEffectEvent`.
+5. Sync with an external system: Effect, with cleanup.
+6. Non-reactive read inside an Effect: `useEffectEvent`.
 7. Mutable non-visual value: ref.
-8. Shared UI or logic: extract a component or focused Hook.
-9. Naming and structure: domain-language rule and the clean-code skill.
+8. Shared UI or logic: a component or a focused Hook.
+9. Naming and structure: domain-language and the clean-code skill.

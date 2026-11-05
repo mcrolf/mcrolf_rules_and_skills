@@ -1,35 +1,31 @@
 ---
-description: Delegate independent tasks to subagents when parallel work can progress without interfering with other ongoing tasks. For each subtask, choose a model from the provider that fits — Codex, Claude, Cursor, or another listed provider — and keep expensive models off trivial work.
+description: Delegate independent subtasks that will not interfere with work in progress. Pick the listed model that fits, including other providers, and keep expensive models off trivial work.
 alwaysApply: true
 ---
 
 # Parallel Delegation
 
-Proactively delegate independent subtasks to available subagents when meaningful work can run in parallel without interfering with any task already in progress. Do not wait for the user to request delegation when these conditions are met.
+Delegate independent subtasks to available subagents when the work can run in parallel without interfering with a task already in progress. Do not wait for the user to ask.
 
-- Before delegating, check known active tasks, agent assignments, pending dependencies, and shared resources for conflicts. Use the runtime's task inventory when available and relevant.
-- Delegate only work within the user's authorized scope that can proceed independently. Keep work sequential when it depends on an unfinished result or coordination would outweigh the benefit.
-- Give each subagent a clear objective, necessary context, explicit ownership of files or resources, constraints, and a concrete expected result. Tell it about relevant work already in progress.
-- Assign separate files or components for concurrent edits. Shared files, branches, browser sessions, services, databases, and external actions require coordinated ownership or isolation supported by the runtime. If safe separation is uncertain, do the work sequentially.
-- Continue useful independent work while subagents run. Avoid duplicating assigned work, overwriting another agent's changes, or disrupting an active task to make room for a new one.
-- Keep the number of subagents proportionate to the work and within runtime limits. Follow the active provider's delegation, permissions, completion, and cancellation workflows.
-- Review and integrate delegated results, resolve conflicts, and perform appropriate validation before reporting the overall task complete. The primary agent remains responsible for the final result.
-- If priorities or shared resources change, coordinate, narrow, or stop affected delegated work before continuing. Never cancel an unrelated task without authorization.
+- Check active tasks, assignments, dependencies, and shared resources first. Use the runtime task inventory when it exists.
+- Stay inside the user's authorized scope. Keep work sequential when it depends on an unfinished result, shares a file or resource, or coordination would cost more than it saves.
+- Give each subagent one objective, the context it needs, ownership of files or resources, constraints, and a concrete result. Mention relevant work already in progress.
+- Concurrent edits need separate files or components. Shared files, branches, browser sessions, services, databases, and external actions need runtime isolation or a single owner. If separation is uncertain, work sequentially.
+- Keep working on other independent parts while subagents run. Do not redo their work, overwrite their changes, or preempt an active task.
+- Match the subagent count to the work and to runtime limits. Follow that provider's delegation, permission, completion, and cancellation flow.
+- Review, integrate, and validate delegated results before calling the task done. The parent agent owns the final result.
+- If priorities or shared resources change, narrow or stop the affected delegated work first. Never cancel an unrelated task without authorization.
 
-# Use Models from Other Providers
+## Model choice
 
-Choosing the provider and model is a primary decision for every delegated subtask, on par with the decision to delegate. Codex, Claude, Cursor, and every other provider the runtime lists are in scope. Use another provider's model whenever it fits the subtask better than the parent model.
+Choose the provider and model as deliberately as you choose to delegate. Codex, Claude, Cursor, and any other provider the runtime lists are in scope. Use another provider when its model fits better than the parent.
 
-Stay on the parent model only when it is the best fit, or when the runtime lists no alternative. Select only from models the runtime lists as available. If it offers one model, use that model. If the user names a model or provider, use that choice.
+Use only listed models. If the user names a model or provider, use that. If the runtime lists one model, use it. Stay on the parent only when it is the best fit or no alternative is listed. Set the model explicitly when that is how the runtime selects a provider; an omitted model stays on the parent. Different subtasks in the same turn use different providers when their demands differ.
 
-Set the model explicitly when that is how the runtime selects a provider. An omitted model stays on the parent provider, so set one whenever another listed model is the better fit. Different subtasks in the same turn should use different providers when their demands differ.
+Fitness first: the model must be able to finish the subtask reliably. When two models are similarly capable, pick the cheaper one, including a cheaper model from another provider.
 
-Judge fitness first: the model should be able to complete the subtask reliably. When two models are similarly capable, prefer the less expensive one, including a cheaper model from another provider.
+- Trivial or mechanical work (narrow lookup, inventory, formatting, extraction, boilerplate) uses a fast, inexpensive model. Leave frontier models for harder work.
+- Bounded implementation uses a capable mid-tier model.
+- Hard reasoning, ambiguous design, architecture, security-sensitive judgment, and subtle debugging use the strongest model that fits, including a stronger model from another provider.
 
-- Trivial or mechanical work, such as a narrow lookup, file inventory, formatting, simple extraction, or boilerplate, uses a fast, inexpensive model from whichever provider offers one. Leave frontier and high-cost models for harder work.
-- Clear, bounded implementation uses a capable mid-tier model from Codex, Claude, Cursor, or another listed provider.
-- Hard reasoning, ambiguous design, architecture, security-sensitive judgment, and subtle debugging use the strongest fitting model. Use a more expensive model from another provider when the task needs that capability.
-
-Match the subagent to the subtask. Use a cheaper model than the parent when the subtask is easier, including a cheaper model from a different provider. Use a stronger model from another provider when the subtask needs more capability than the parent or a cheaper model can reliably provide.
-
-For example, send a documentation lookup to a fast, inexpensive model while a stronger model from another provider implements an independent component. Two independent components can run at once on different providers, such as Codex for one and Claude or Cursor for the other. Keep dependent migrations or edits to the same file sequential unless isolated and deliberately coordinated.
+Use a cheaper model than the parent when the subtask is easier, and a stronger model from another provider when the parent is not enough. A cheap model can look up docs while another provider implements a separate component. Keep dependent edits to the same file sequential unless the runtime isolates them.

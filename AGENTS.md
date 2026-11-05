@@ -1,55 +1,31 @@
 # Global Agent Instructions
 
-This file is the source of truth for the user's shared agent instructions across projects and providers. Maintain shared guidance and resource references here; keep provider entry-point files as references to this file.
+Source of truth for shared agent instructions. Provider entry points only point here. Do not follow them recursively or copy rule text into them.
 
-## Rules and Guidance
+## Rules
 
-Before planning or starting any task, read and apply these global rules, subject to higher-priority instructions and runtime capabilities:
+Before planning or starting a task, read and apply every file in `~/.agents/rules/`, subject to higher-priority instructions and runtime capabilities. The current files are `parallel-delegation.mdc`, `no-em-dashes.mdc`, `token-efficiency.mdc`, `domain-language.mdc`, and `clean-code.mdc`. Read any other file in that directory too.
 
-- `~/.agents/rules/parallel-delegation.mdc`: Delegate independent work when it will not interfere with ongoing tasks. Choose the best model or provider for each subtask, and keep expensive models off trivial work.
-- `~/.agents/rules/no-em-dashes.mdc`: Prohibit em dashes in agent writing and en dashes used as substitutes; allow hyphens in compound words.
-- `~/.agents/rules/token-efficiency.mdc`: Keep work and responses efficient while preserving safeguards, complete scope, and meaningful verification.
-- `~/.agents/rules/domain-language.mdc`: Prefer and enforce the codebase's domain language; challenge mismatched terms and avoid duplicate concepts under synonyms.
-- `~/.agents/rules/clean-code.mdc`: Enforce Clean Code craftsmanship: simplicity, clear names, small focused units, honest structure, and readable tests. Before writing, changing, or reviewing code, apply the `clean-code` skill at `~/.agents/skills/clean-code/SKILL.md`.
+Before code, documentation, configuration, or test changes, also read applicable local guidance, in order:
 
-Before making code, documentation, configuration, or test changes, discover applicable guidance in this order:
+1. Repository `AGENTS.md` for the working directory, then `.cursor/rules/**`, `.cursor/**/*.mdc`, and `.cursor/**/*.md`.
+2. Home-level Cursor rules for this project under `~/.cursor/projects/**/rules/**`.
 
-1. Repository instructions and repository-local Cursor rules, if present:
-   - `AGENTS.md` files applicable to the working directory.
-   - `.cursor/rules/**`
-   - `.cursor/**/*.mdc`
-   - `.cursor/**/*.md`
-2. Shared personal rules in `~/.agents/rules/`, if present.
-3. Home-level Cursor project rules in `~/.cursor/projects/**/rules/**`.
+Use `description`, `globs`, and `alwaysApply`. Read only files that apply. Skip directories that do not exist. Do not scan `~/.cursor/extensions` unless the task is about Cursor extensions or editor configuration.
 
-Use rule metadata such as `description`, `globs`, and `alwaysApply` to determine applicability. Read only relevant files. Provider entry-point files that reference this file are pointers, not additional rule sources; do not follow them recursively.
+## Skills
 
-## Skills and Supporting Resources
+Read a `SKILL.md` before using a skill whose name, description, or invocation policy matches the task. Prefer the provider catalog. If the catalog may be missing a skill, check:
 
-Discover relevant skills from the active provider's skill catalog and these locations, when present:
+- `~/.agents/skills/*/SKILL.md`
+- `~/.codex/skills/*/SKILL.md`
+- `~/.cursor/skills-cursor/*/SKILL.md` and `~/.cursor/skills/*/SKILL.md`
+- Repository `.agents/skills/*/SKILL.md` and `.cursor/skills/*/SKILL.md`
 
-- Shared personal skills: `~/.agents/skills/*/SKILL.md`
-- Codex skills: `~/.codex/skills/*/SKILL.md`
-- Cursor skills: `~/.cursor/skills-cursor/*/SKILL.md` and `~/.cursor/skills/*/SKILL.md`
-- Repository-local skills supported by the active provider, including `.agents/skills/*/SKILL.md` and `.cursor/skills/*/SKILL.md`.
+Do not list every skill file when the catalog already has the match. Resolve a skill's scripts, templates, assets, and docs relative to that skill directory unless it says otherwise. Use resources the active provider can run.
 
-Use each skill's name, description, and invocation policy to decide when it applies. Read the relevant `SKILL.md` before using a skill. Resolve referenced scripts, templates, assets, and documentation relative to that skill's directory, unless the skill specifies another location. Use resources compatible with the active provider and available tools.
+## Precedence
 
-## Discovery
+System, developer, and direct user instructions win, then the most specific applicable rule or skill. Project guidance overrides broader personal defaults. Mention a conflict when it changes the result.
 
-Prefer fast, targeted searches:
-
-```sh
-rg --files .cursor
-rg --files ~/.agents/rules
-find ~/.cursor/projects -type f -path '*/rules/*' -print
-find ~/.agents/skills ~/.codex/skills ~/.cursor/skills-cursor ~/.cursor/skills -maxdepth 2 -name SKILL.md -print
-```
-
-Run commands only for directories that exist. Do not bulk-load `~/.cursor/extensions`; inspect it only when the task specifically concerns Cursor extensions or editor configuration.
-
-## Precedence and Refresh
-
-Follow system, developer, and direct user instructions first. Apply project-specific guidance over broader personal defaults where applicable. Among relevant rules and skills, use the most specific guidance first. Mention conflicts when they materially affect the result.
-
-Do not assume guidance is already loaded. Re-check applicable rules and skills when starting a new task, touching a new technology area, or entering a repository with additional local guidance.
+Re-read applicable rules and skills when starting a task, entering a repository, or touching a new technology. Do not assume they are already loaded.

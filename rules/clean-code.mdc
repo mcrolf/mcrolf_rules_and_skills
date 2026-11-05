@@ -1,23 +1,18 @@
 ---
-description: Enforce Clean Code craftsmanship when writing or changing code. Before code changes, load the clean-code skill for names, functions, structure, errors, tests, and design smells.
+description: Before writing, changing, or reviewing code, apply the clean-code skill. Prefer clear names, small focused units, and the project's conventions.
 alwaysApply: true
 ---
 
 # Clean Code
 
-Write code another developer can read, change, and extend without reconstructing the author's intent. Prefer clarity over cleverness. Follow the project's conventions first.
+Before writing, changing, or reviewing code, read and apply `~/.agents/skills/clean-code/SKILL.md`. Read `heuristics.md` beside it only when that skill says to. If that path is missing and this rules repository is the workspace, read `skills/clean-code/SKILL.md`. If neither file can be read, say so and apply the fallback below.
 
-Before writing, changing, or reviewing code, read and apply `~/.agents/skills/clean-code/SKILL.md`. That skill holds the working checks. Read `heuristics.md` beside it when the skill says to. If `~/.agents/skills/clean-code/SKILL.md` is missing and this rules repository is the workspace, read `skills/clean-code/SKILL.md` there. If neither file can be read, apply the standards below and say the skill was unavailable.
+Project conventions win, then `domain-language`. Name the conflict when it changes the result. These checks are an original working guide associated with Robert C. Martin's *Clean Code*, not a copy of the book.
 
-## Standards
+## Fallback
 
-- Keep it simple. Add abstraction, configuration, or indirection only when the change has a present need for it.
-- Leave touched code a bit cleaner when the cleanup is local to the change. Keep unrelated refactors out of the change.
-- Fix root causes. Use a special case only when a clear local fix is not available.
-- Name things with the project's domain language. A name says what the thing is or does.
-- Keep functions and types small, focused, and at one level of abstraction. Prefer few arguments and visible side effects.
-- Put intent in names and structure. Comment for intent, consequences, or warnings the code cannot carry.
-- Keep tests readable, fast, independent, and repeatable, and as clean as the code they protect.
-- Watch rigidity, fragility, immobility, needless complexity, needless repetition, and opacity. If a change would worsen one of these, choose the clearer structure or name the tradeoff before proceeding.
-
-These standards and the clean-code skill are an original working guide to principles associated with Robert C. Martin, *Clean Code*. They are not a reproduction of the book. Project conventions and `domain-language` win on conflict; name the conflict when it changes the result.
+- Add abstraction, configuration, or indirection only for a present need. Fix a local clarity problem in code you are already changing, and leave unrelated refactors out. Fix the root cause; use a special case only when a local fix is not available.
+- Name things in the project's domain language. Keep functions and types small, focused, and at one level of abstraction, with few arguments and visible side effects.
+- Comment only for intent, a consequence, or a warning the code cannot carry.
+- Keep tests readable, fast, independent, and repeatable.
+- Do not worsen rigidity, fragility, immobility, needless complexity, needless repetition, or opacity. If the clearer structure costs something, name the tradeoff.
