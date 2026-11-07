@@ -4,7 +4,7 @@ Source of truth for shared agent instructions. Provider entry points only point 
 
 ## Rules
 
-Before planning or starting a task, read and apply every `*.md` file in `~/.agents/rules/`, subject to higher-priority instructions and runtime capabilities. The current files are `parallel-delegation.md`, `no-em-dashes.md`, `token-efficiency.md`, `domain-language.md`, and `clean-code.md`. Read any other `*.md` file in that directory too. A `.mdc` file with the same stem is the Cursor name for that rule; apply the rule once.
+Before planning or starting a task, read and apply every `*.md` file in `~/.agents/rules/`, subject to higher-priority instructions and runtime capabilities. The current files are `parallel-delegation.md`, `no-em-dashes.md`, `token-efficiency.md`, `domain-language.md`, `clean-code.md`, and `ongoing-development.md`. Read any other `*.md` file in that directory too. A `.mdc` file with the same stem is the Cursor name for that rule; apply the rule once.
 
 Before code, documentation, configuration, or test changes, also read applicable local guidance, in order:
 
