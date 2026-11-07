@@ -9,7 +9,7 @@ This repository contains:
 | Path | Role |
 | --- | --- |
 | `AGENTS.md` | Discovery, precedence, and where to read rules and skills |
-| `rules/*.md` | Always-on rules: parallel delegation, no em dashes, token efficiency, domain language, clean code. `rules/*.mdc` symlinks to the same file for Cursor |
+| `rules/*.md` | Always-on rules: parallel delegation, no em dashes, token efficiency, domain language, clean code, ongoing development. `rules/*.mdc` symlinks to the same file for Cursor |
 | `skills/*/SKILL.md` | `clean-code`, `knowledge-bank`, `react-best-practices`, `tough-critic` |
 
 Skills and `AGENTS.md` look for `~/.agents/rules` and `~/.agents/skills`. A clone by itself is not enough. Open this repository in a provider you already use, paste the shared prompt, then paste the prompt for each provider you want.
