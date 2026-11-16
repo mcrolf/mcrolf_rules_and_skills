@@ -56,7 +56,7 @@ docs/knowledge-bank/
 
 ## Writing and done
 
-Be concise. Use domain language. Diagrams are Mermaid in markdown unless the user asks for another format. Summarize long copyrighted specs; do not paste them. Follow the no-em-dash and token-efficiency rules.
+Be concise. Use domain language. Diagrams are Mermaid in markdown unless the user asks for another format. Summarize long copyrighted specs; do not paste them. Follow the writing and token-efficiency rules.
 
 Done when the user was asked for attachments or waived that step, `INDEX.md` and the evidenced core docs exist, and glossary, features, and architecture share terms. In chat, give the absolute bank path, what was included, what is missing, and any attachment-versus-code conflict.
 
