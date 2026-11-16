@@ -7,6 +7,8 @@ alwaysApply: true
 
 ## Product copy
 
+Before writing customer-facing copy, use the product brief, existing UI, and code to identify what the feature actually does and who it is for. Do not infer benefits or capabilities from a section heading or visual design. If the facts are insufficient, write a neutral placeholder or flag the missing information.
+
 Write product copy as interface text, not as a pitch. Avoid template-driven copy that sounds polished but uses familiar marketing shapes instead of saying precisely what the product does.
 
 - Use only facts established in the project or brief. Name the user's action and the concrete result.
