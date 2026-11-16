@@ -1,6 +1,6 @@
 # Design principles in practice
 
-Read relevant sections only. These original working interpretations use public primary sources, not the books' full paid text. Verify current platform and component details when needed.
+Read relevant sections only. These are original working interpretations in our own words, drawn from public primary sources or a user-supplied copy, not reproductions of the books. Verify current platform and component details when needed.
 
 ## Apple Human Interface Guidelines
 
@@ -52,3 +52,19 @@ Replace browser validation only with a complete accessible submission/error/focu
 Source: [Book overview/contents](https://www.refactoringui.com/).
 
 Visual tactics must preserve semantic HTML, persistent labels, accessible names, and contrast. Galleries suggest treatments, not this product's composition.
+
+## A Dictionary of Color Combinations, Sanzo Wada
+
+Use these concepts from the book's usage chapter when choosing or reviewing a palette. The book is a catalog of 348 combinations; you do not need it to apply them.
+
+- **Choose a combination, not a single color.** Build the palette as a set of 2, 3, or 4 colors chosen to work together, with neutrals counted as members. A brand hue plus framework defaults is not a combination. Add colors only when the UI needs another role.
+- **Decide the harmony on purpose.** *Same-tone* harmony pairs colors of similar lightness and strength (all light, all dark, all pale, or all deep). It is easy to get right and reads calm. *Contrasting-tone* harmony joins different tones; it is harder and more interesting, so it needs a product reason. *Pan-tone* mixes light, dark, pale, and deep freely and is hardest to control. Name which one the UI uses.
+- **One family can carry a whole UI.** Shades of one hue family at different lightness stay harmonious, the way a pale-blue coat, an indigo kimono, and a blue-tinted sash work together. This suits dense, task-heavy screens.
+- **Never use colors in equal amounts.** The book shows swatches at equal size only for comparison and warns that equal areas are rare and usually wrong in practice. Assign a dominant color (backgrounds, large surfaces), a secondary color, and an accent used sparingly (primary action, focus, selection). The accent is the smallest area and the strongest signal.
+- **Judge color at its real size.** A color covering a large area reads differently from a small chip; the book notes large areas look paler and weaker than the swatch. Check colors at real size in the rendered UI, not in a token list or small palette preview.
+- **Match temperature.** Every hue has warm and cool versions (a yellow-green is warm, a blue-green is cool; some yellows read cool). Keep temperatures consistent across neutrals and accents, or contrast them deliberately. Warm grays beside cool blues look accidental.
+- **Treat the surface as part of the combination.** The book tests each combination against the white page, and the same dye looks different on silk, cotton, and linen. On screens, the background, light and dark themes, images, and elevation surfaces change how a color reads. Test the palette on each surface it appears on, and treat white or the base background as one of its colors.
+
+Combine with [contrast requirements](accessibility.md#contrast-and-scalable-presentation): harmony never excuses text, focus, or control contrast below WCAG AA, and color is never the only signal.
+
+Source: Sanzo Wada, *Haishoku Sōkan* (1933 to 1934), published as *A Dictionary of Color Combinations* (Seigensha). [Archive.org record](https://archive.org/details/dictionaryofcolo0000vari).
