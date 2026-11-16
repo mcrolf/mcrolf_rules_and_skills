@@ -50,4 +50,4 @@ Include title, date, scope, and commit or branch; an executive summary with them
 
 Then give the absolute path and a short summary: counts by severity, top themes, and any blocked investigation.
 
-Evidence must be checkable by opening the cited paths. A fix must be actionable without repeating the analysis. Do not edit the codebase during the critique unless the user asks. Follow the no-em-dash and token-efficiency rules in the report and the summary.
+Evidence must be checkable by opening the cited paths. A fix must be actionable without repeating the analysis. Do not edit the codebase during the critique unless the user asks. Follow the writing and token-efficiency rules in the report and the summary.
