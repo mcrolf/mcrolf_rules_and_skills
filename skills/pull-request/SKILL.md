@@ -5,7 +5,7 @@ description: Write pull request titles and descriptions that name the subject, e
 
 # Pull Request
 
-Write the title and description from what the branch actually changes. `~/.agents/rules/writing.md` and `~/.agents/rules/domain-language.md` apply to all PR text. Opening a PR still follows `~/.agents/rules/ongoing-development.md`: ask the user first.
+Write the title and description from what the branch actually changes. Follow the Writing section below in all PR text. `~/.agents/rules/domain-language.md` also applies. Opening a PR still follows `~/.agents/rules/ongoing-development.md`: ask the user first.
 
 If the repository has a PR template (`.github/pull_request_template.md` or similar), fill its sections with the content below instead of replacing it.
 
@@ -51,6 +51,16 @@ Changes that are neither (refactors, docs, dependency bumps) get one line each u
 - Name anything not tested and why.
 - Never say a check passed unless it ran and passed. If nothing was tested, write `Not tested` and the reason.
 
+## Writing
+
+These follow `~/.agents/rules/writing.md`, adapted for PRs, so the skill works where that rule is not loaded. If both are loaded and they differ, the rule wins.
+
+- State facts the diff, issue, or conversation establishes. If a detail is unknown, say so or ask. Do not guess at causes, impact, or results.
+- Use plain sentences that name the change and its effect. No pitch language, slogans, or claims like "significantly improves" without evidence.
+- Use the project's names for components, entities, and actions.
+- Do not add a summary or closing sentence that repeats the sections above it.
+- Do not use em dashes (U+2014). Use en dashes (U+2013) only for numeric or date ranges. Use a comma, parentheses, a colon, a semicolon, or a new sentence instead. Hyphens in compounds are fine.
+
 ## Template
 
 ```markdown
@@ -81,4 +91,4 @@ Changes that are neither (refactors, docs, dependency bumps) get one line each u
 - Every problem has its fix. Every feature has its purpose and behavior.
 - Every statement is supported by the diff, the issue, or the conversation.
 - The testing section matches what actually ran.
-- No em dashes, and no en dashes used to break a sentence.
+- The text passes the Writing section: no guesses, no pitch language, no repeated summary, no em dashes or sentence-break en dashes.
