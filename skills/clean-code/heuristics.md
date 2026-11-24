@@ -1,6 +1,6 @@
 # Clean Code Heuristics
 
-Read this when `SKILL.md` tells you to. Judge the code you are changing. Fix a smell the change introduces or touches. Leave unrelated debt unless the user asked for a cleanup.
+Read this when the clean-code guide tells you to. Judge the code you are changing. Fix a smell the change introduces or touches. Leave unrelated debt unless the user asked for a cleanup.
 
 Each item says what to do when you see the smell.
 

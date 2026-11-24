@@ -5,7 +5,7 @@ description: React principles for hooks, effects, refs, state, lists, and compon
 
 # React Best Practices
 
-Apply this when reading or writing React components. Prefer principles over rote patterns. Follow the project's React and TypeScript conventions first. Names and structure follow the domain-language rule and the clean-code skill. When the project uses TypeScript, also load `typescript-best-practices` if that skill exists.
+Apply this when reading or writing React components. Prefer principles over rote patterns. Follow the project's React and TypeScript conventions first. Names and structure follow [references/domain-language.md](references/domain-language.md) and [references/clean-code.md](references/clean-code.md). When the project uses TypeScript, also load `typescript-best-practices` if that skill exists.
 
 ## Effects are escape hatches
 
@@ -46,7 +46,7 @@ Use Effects for browser APIs, non-React libraries, window or document listeners,
 
 ## Components, state, and composition
 
-- Keep a component small and single-purpose. Extract repeated UI. Leave broader craftsmanship to the clean-code skill.
+- Keep a component small and single-purpose. Extract repeated UI. Leave broader craftsmanship to [references/clean-code.md](references/clean-code.md).
 - Name components, props, events, and view-model fields with the project's domain language. Do not add a synonym prop or screen for an existing concept.
 - Prefer composition (`children`, slots) over deep prop drilling. Use Context for a truly cross-cutting value, not as the default for every shared prop.
 - Co-locate state with the components that use it. Lift it only when siblings must share it.
@@ -84,4 +84,4 @@ If the project uses this layout, keep it. Otherwise follow the repository.
 6. Non-reactive read inside an Effect: `useEffectEvent`.
 7. Mutable non-visual value: ref.
 8. Shared UI or logic: a component or a focused Hook.
-9. Naming and structure: domain-language and the clean-code skill.
+9. Naming and structure: [references/domain-language.md](references/domain-language.md) and [references/clean-code.md](references/clean-code.md).
