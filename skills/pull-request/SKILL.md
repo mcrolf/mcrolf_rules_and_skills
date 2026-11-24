@@ -1,6 +1,6 @@
 ---
 name: pull-request
-description: Write pull request titles and descriptions that name the subject, explain the problems fixed and how, describe each new feature's purpose and behavior, and record the testing done. Use when opening, drafting, or updating a pull request, or when the user asks for a PR title, PR description, or PR summary.
+description: Write pull request titles and descriptions that name the subject, explain the problems fixed and how, describe each new feature's purpose and behavior, and record the testing done, evidence of success, and merge danger (one-way or two-way door, blast radius). Use when opening, drafting, or updating a pull request, or when the user asks for a PR title, PR description, or PR summary.
 ---
 
 # Pull Request
@@ -51,6 +51,22 @@ Changes that are neither (refactors, docs, dependency bumps) get one line each u
 - Name anything not tested and why.
 - Never say a check passed unless it ran and passed. If nothing was tested, write `Not tested` and the reason.
 
+### Evidence
+
+Show that the change worked, not just that checks ran.
+
+- For a fix, show the original failure and that it no longer happens: the failing test or error before, and the passing result after.
+- For a feature, show it doing what the Behavior section says: command output, a log excerpt, a screenshot, or a link to a run.
+- Keep excerpts short and quote them exactly. Use output from this session or the branch's CI. Never reconstruct or invent it.
+- If there is no evidence beyond the checks in Testing, say so.
+
+### Merge danger
+
+- **Door**: say whether the change is a two-way door or a one-way door, and why.
+  - Two-way: cheap to reverse. Reverting the merge or a small follow-up restores the old behavior with no lasting effect (code-only changes, additive changes, behavior behind a flag).
+  - One-way: hard or impossible to reverse once merged or deployed (a destructive or data-rewriting migration, removing a public API, field, or route, deleting data, publishing a release, or a decision others will build on). Name what makes it one-way and the rollback plan or mitigation.
+- **Blast radius**: name what can break if the change is wrong: which users, services, data, callers, or environments, and how the failure would show up. Base it on the diff and its callers, not a guess.
+
 ## Writing
 
 Apply [references/writing.md](references/writing.md), including its punctuation rules. Its product-copy guidance carries over to PRs as follows:
@@ -81,6 +97,16 @@ Apply [references/writing.md](references/writing.md), including its punctuation 
 - `<command>`: <result>
 - Manual: <steps>. Result: <what was observed>.
 - Not tested: <gap>, because <reason>.
+
+## Evidence
+
+- Before: <failure, quoted exactly>
+- After: <result, quoted exactly, or a screenshot or run link>
+
+## Merge danger
+
+- **Door**: <Two-way or One-way>. <Why, and for a one-way door the rollback plan or mitigation.>
+- **Blast radius**: <what can break if this is wrong, and how it would show up.>
 ```
 
 ## Check before submitting
@@ -89,4 +115,6 @@ Apply [references/writing.md](references/writing.md), including its punctuation 
 - Every problem has its fix. Every feature has its purpose and behavior.
 - Every statement is supported by the diff, the issue, or the conversation.
 - The testing section matches what actually ran.
+- The evidence is real output or a real artifact that shows the change working, or the PR says there is none.
+- Merge danger names the door type with a reason, and the blast radius names what can break.
 - The text passes the Writing section and the punctuation rules in [references/writing.md](references/writing.md).
