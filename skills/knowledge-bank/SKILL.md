@@ -5,7 +5,7 @@ description: Compiles a project knowledge bank from the codebase and user attach
 
 # Knowledge Bank
 
-Build a durable, evidence-based document set a new contributor or later agent can use without rediscovering the system. Use the project's domain language. Read `~/.agents/rules/domain-language.md` before the glossary or any new name.
+Build a durable, evidence-based document set a new contributor or later agent can use without rediscovering the system. Use the project's domain language. Read [references/domain-language.md](references/domain-language.md) before the glossary or any new name.
 
 ## Goal
 
@@ -56,7 +56,7 @@ docs/knowledge-bank/
 
 ## Writing and done
 
-Be concise. Use domain language. Diagrams are Mermaid in markdown unless the user asks for another format. Summarize long copyrighted specs; do not paste them. Follow the writing and token-efficiency rules.
+Be concise. Use domain language. Diagrams are Mermaid in markdown unless the user asks for another format. Summarize long copyrighted specs; do not paste them. Follow [references/writing.md](references/writing.md) and [references/token-efficiency.md](references/token-efficiency.md).
 
 Done when the user was asked for attachments or waived that step, `INDEX.md` and the evidenced core docs exist, and glossary, features, and architecture share terms. In chat, give the absolute bank path, what was included, what is missing, and any attachment-versus-code conflict.
 

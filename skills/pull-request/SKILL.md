@@ -5,7 +5,7 @@ description: Write pull request titles and descriptions that name the subject, e
 
 # Pull Request
 
-Write the title and description from what the branch actually changes. Follow the Writing section below in all PR text. `~/.agents/rules/domain-language.md` also applies. Opening a PR still follows `~/.agents/rules/ongoing-development.md`: ask the user first.
+Write the title and description from what the branch actually changes. All PR text follows [references/writing.md](references/writing.md), [references/domain-language.md](references/domain-language.md), and the Writing section below. Opening a PR follows [references/ongoing-development.md](references/ongoing-development.md): ask the user first.
 
 If the repository has a PR template (`.github/pull_request_template.md` or similar), fill its sections with the content below instead of replacing it.
 
@@ -53,13 +53,11 @@ Changes that are neither (refactors, docs, dependency bumps) get one line each u
 
 ## Writing
 
-These follow `~/.agents/rules/writing.md`, adapted for PRs, so the skill works where that rule is not loaded. If both are loaded and they differ, the rule wins.
+Apply [references/writing.md](references/writing.md), including its punctuation rules. Its product-copy guidance carries over to PRs as follows:
 
 - State facts the diff, issue, or conversation establishes. If a detail is unknown, say so or ask. Do not guess at causes, impact, or results.
 - Use plain sentences that name the change and its effect. No pitch language, slogans, or claims like "significantly improves" without evidence.
-- Use the project's names for components, entities, and actions.
 - Do not add a summary or closing sentence that repeats the sections above it.
-- Do not use em dashes (U+2014). Use en dashes (U+2013) only for numeric or date ranges. Use a comma, parentheses, a colon, a semicolon, or a new sentence instead. Hyphens in compounds are fine.
 
 ## Template
 
@@ -91,4 +89,4 @@ These follow `~/.agents/rules/writing.md`, adapted for PRs, so the skill works w
 - Every problem has its fix. Every feature has its purpose and behavior.
 - Every statement is supported by the diff, the issue, or the conversation.
 - The testing section matches what actually ran.
-- The text passes the Writing section: no guesses, no pitch language, no repeated summary, no em dashes or sentence-break en dashes.
+- The text passes the Writing section and the punctuation rules in [references/writing.md](references/writing.md).

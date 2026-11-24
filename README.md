@@ -10,9 +10,12 @@ This repository contains:
 | --- | --- |
 | `AGENTS.md` | Discovery, precedence, and where to read rules and skills |
 | `rules/*.md` | Always-on rules: parallel delegation, writing, token efficiency, domain language, clean code, ongoing development. `rules/*.mdc` symlinks to the same file for Cursor |
-| `skills/*/SKILL.md` | `clean-code`, `frontend-design`, `knowledge-bank`, `pull-request`, `react-best-practices`, `tough-critic` |
+| `skills/*/SKILL.md` | `clean-code`, `frontend-design`, `knowledge-bank`, `pull-request`, `react-best-practices`, `tough-critic`. Each skill folder is standalone |
+| `scripts/sync-skill-references.sh` | Copies rules and the clean-code guide into the skills that bundle them. `--check` reports stale copies |
 
-Skills and `AGENTS.md` look for `~/.agents/rules` and `~/.agents/skills`. A clone by itself is not enough. Open this repository in a provider you already use, paste the shared prompt, then paste the prompt for each provider you want.
+`AGENTS.md` looks for `~/.agents/rules` and `~/.agents/skills`. A clone by itself is not enough.
+
+Each skill carries copies of the rules and guides it uses (in `references/`, or beside `SKILL.md` for `clean-code`), so a skill folder works when installed on its own. The files in `rules/` and `skills/clean-code/` are the sources. After editing one, run `scripts/sync-skill-references.sh` and commit the updated copies. Open this repository in a provider you already use, paste the shared prompt, then paste the prompt for each provider you want.
 
 ## One rule, no AGENTS.md
 
